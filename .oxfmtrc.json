@@ -3,6 +3,5 @@
   "ignorePatterns": [],
   "experimentalTailwindcss": {
     "stylesheet": "./app/app.css"
-    ,
   }
 }
