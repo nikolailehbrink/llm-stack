@@ -7,6 +7,8 @@
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
     "knip": "knip"
   },
   "dependencies": {
@@ -24,6 +26,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "knip": "5.83.1",
+    "oxlint": "1.48.0",
     "tailwindcss": "4.1.18",
     "typescript": "5.9.3",
     "vite": "7.3.1",
