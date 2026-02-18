@@ -2,6 +2,7 @@
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "tags": ["-lintignore"],
   "entry": ["app/lib/auth-client.ts"],
+  "ignoreDependencies": ["@commitlint/cli"],
   "oxlint": {
     "config": ["oxlint.config.ts"]
   }
