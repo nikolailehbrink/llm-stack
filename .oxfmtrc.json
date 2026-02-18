@@ -3,5 +3,6 @@
   "ignorePatterns": [],
   "experimentalTailwindcss": {
     "stylesheet": "./app/app.css"
-  }
+  },
+  "experimentalSortPackageJson": true
 }
