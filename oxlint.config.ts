@@ -30,7 +30,7 @@ export default defineConfig({
     "react/react-in-jsx-scope": "off",
     "import/no-cycle": "error",
     "import/no-self-import": "error",
-    "import/no-unassigned-import": "off",
+    "import/no-unassigned-import": ["error", { allow: ["**/*.css"] }],
     "no-empty-pattern": "off",
     "unicorn/no-unnecessary-await": "warn",
   },
