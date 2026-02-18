@@ -148,6 +148,7 @@ The `redirectTo` parameter is validated against your `trustedOrigins` configurat
 #### Password requirements
 
 During password reset, the new password must meet length requirements:
+
 - **Minimum**: 8 characters (default), configurable via `minPasswordLength`
 - **Maximum**: 128 characters (default), configurable via `maxPasswordLength`
 
@@ -214,8 +215,7 @@ export const auth = betterAuth({
     enabled: true,
     password: {
       hash: (password) => hash(password, argon2Options),
-      verify: ({ password, hash: storedHash }) =>
-        verify(storedHash, password, argon2Options),
+      verify: ({ password, hash: storedHash }) => verify(storedHash, password, argon2Options),
     },
   },
 });

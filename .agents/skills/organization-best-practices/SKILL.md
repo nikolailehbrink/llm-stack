@@ -84,7 +84,6 @@ await auth.api.createOrganization({
 
 **Note**: The `userId` parameter cannot be used alongside session headers.
 
-
 ## Active Organizations
 
 The active organization is stored in the session and scopes subsequent API calls. Always set an active organization after the user selects one.
@@ -265,12 +264,11 @@ organization({
 
 The plugin provides role-based access control (RBAC) with three default roles:
 
-| Role | Description |
-|------|-------------|
-| `owner` | Full access, can delete organization |
-| `admin` | Can manage members, invitations, settings |
-| `member` | Basic access to organization resources |
-
+| Role     | Description                               |
+| -------- | ----------------------------------------- |
+| `owner`  | Full access, can delete organization      |
+| `admin`  | Can manage members, invitations, settings |
+| `member` | Basic access to organization resources    |
 
 ### Checking Permissions
 
@@ -309,9 +307,9 @@ import { organization } from "better-auth/plugins";
 export const auth = betterAuth({
   plugins: [
     organization({
-        teams: {
-            enabled: true
-        }
+      teams: {
+        enabled: true,
+      },
     }),
   ],
 });
@@ -356,10 +354,10 @@ await authClient.organization.setActiveTeam({
 ```ts
 organization({
   teams: {
-      maximumTeams: 20, // Max teams per org
-      maximumMembersPerTeam: 50, // Max members per team
-      allowRemovingAllTeams: false, // Prevent removing last team
-  }
+    maximumTeams: 20, // Max teams per org
+    maximumMembersPerTeam: 50, // Max members per team
+    allowRemovingAllTeams: false, // Prevent removing last team
+  },
 });
 ```
 
@@ -376,9 +374,9 @@ import { dynamicAccessControl } from "@better-auth/organization/addons";
 export const auth = betterAuth({
   plugins: [
     organization({
-        dynamicAccessControl: {
-            enabled: true
-        }
+      dynamicAccessControl: {
+        enabled: true,
+      },
     }),
   ],
 });

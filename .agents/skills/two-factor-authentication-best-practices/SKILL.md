@@ -265,7 +265,7 @@ const signIn = async (email: string, password: string) => {
           window.location.href = "/2fa";
         }
       },
-    }
+    },
   );
 };
 ```
