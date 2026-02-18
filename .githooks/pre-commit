@@ -2,19 +2,19 @@
 # Pre-commit: fast checks to catch issues before committing
 
 echo "Running format check..."
-bun fmt:check || {
-  echo "Formatting issues found. Run 'bun fmt' to fix."
+bun run fmt:check || {
+  echo "Formatting issues found. Run 'bun run fmt' to fix."
   exit 1
 }
 
 echo "Running linter..."
-bun lint || {
-  echo "Lint errors found. Run 'bun lint:fix' to fix."
+bun run lint || {
+  echo "Lint errors found. Run 'bun run lint:fix' to fix."
   exit 1
 }
 
 echo "Running knip..."
-bun knip || {
-  echo "Unused code detected. Run 'bun knip' for details."
+bun run knip || {
+  echo "Unused code detected. Run 'bun run knip' for details."
   exit 1
 }
