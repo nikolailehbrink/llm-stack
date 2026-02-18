@@ -7,12 +7,12 @@
     "dev": "react-router dev",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
-    "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "knip": "knip",
-    "test": "vitest"
+    "preview": "vite preview",
+    "test": "vitest",
+    "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
     "@react-router/node": "7.13.0",
