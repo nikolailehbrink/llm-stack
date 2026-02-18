@@ -11,7 +11,8 @@
     "typecheck": "react-router typegen && tsc",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "knip": "knip"
+    "knip": "knip",
+    "test": "vitest"
   },
   "dependencies": {
     "@react-router/node": "7.13.0",
@@ -33,6 +34,7 @@
     "tailwindcss": "4.1.18",
     "typescript": "5.9.3",
     "vite": "7.3.1",
-    "vite-tsconfig-paths": "6.1.1"
+    "vite-tsconfig-paths": "6.1.1",
+    "vitest": "4.0.18"
   }
 }
