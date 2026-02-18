@@ -1,22 +1,20 @@
-import { redirect, useFetcher, Link } from "react-router";
+import { useFetcher, Link } from "react-router";
 import type { Route } from "./+types/dashboard";
-import { auth } from "~/lib/auth.server";
+import { requireAuth } from "~/lib/auth-middleware.server";
+import { sessionContext } from "~/context";
 import { signOut } from "~/lib/auth-client";
+
+export const middleware: Route.MiddlewareFunction[] = [requireAuth];
 
 export function meta() {
   return [{ title: "Dashboard" }];
 }
 
-export async function loader({ request }: Route.LoaderArgs) {
-  const session = await auth.api.getSession({
-    headers: request.headers,
-  });
+export async function loader({ context }: Route.LoaderArgs) {
+  const { user, session } = context.get(sessionContext);
+  console.log(session);
 
-  if (!session) {
-    throw redirect("/auth");
-  }
-
-  return { user: session.user };
+  return { user };
 }
 
 export async function clientAction() {

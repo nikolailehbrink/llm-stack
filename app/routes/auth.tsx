@@ -1,20 +1,10 @@
 import { useState } from "react";
 import { redirect, useFetcher } from "react-router";
 import type { Route } from "./+types/auth";
-import { auth } from "~/lib/auth.server";
+import { requireGuest } from "~/lib/auth-middleware.server";
 import { signIn, signUp } from "~/lib/auth-client";
 
-export async function loader({ request }: Route.LoaderArgs) {
-  const session = await auth.api.getSession({
-    headers: request.headers,
-  });
-
-  if (session) {
-    throw redirect("/dashboard");
-  }
-
-  return {};
-}
+export const middleware: Route.MiddlewareFunction[] = [requireGuest];
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
@@ -28,7 +18,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
         name: String(formData.get("name")),
       });
       if (error) return { error: error.message ?? "Sign up failed" };
-      return { error: null };
+      throw redirect("/dashboard");
     }
     case "sign-in": {
       const { error } = await signIn.email({
@@ -36,7 +26,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
         password: String(formData.get("password")),
       });
       if (error) return { error: error.message ?? "Sign in failed" };
-      return { error: null };
+      throw redirect("/dashboard");
     }
     default:
       return { error: "Invalid action" };
