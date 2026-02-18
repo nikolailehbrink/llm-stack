@@ -1,14 +1,19 @@
 import { useState } from "react";
-import { useFetcher } from "react-router";
+import { redirect, useFetcher } from "react-router";
 import type { Route } from "./+types/auth";
 import { auth } from "~/lib/auth.server";
-import { signIn, signUp, signOut } from "~/lib/auth-client";
+import { signIn, signUp } from "~/lib/auth-client";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await auth.api.getSession({
     headers: request.headers,
   });
-  return { session };
+
+  if (session) {
+    throw redirect("/dashboard");
+  }
+
+  return {};
 }
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
@@ -33,48 +38,15 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
       if (error) return { error: error.message ?? "Sign in failed" };
       return { error: null };
     }
-    case "sign-out": {
-      await signOut();
-      return { error: null };
-    }
     default:
       return { error: "Invalid action" };
   }
 }
 
-export default function AuthPage({ loaderData }: Route.ComponentProps) {
-  const { session } = loaderData;
+export default function AuthPage() {
   const fetcher = useFetcher<typeof clientAction>();
   const isSubmitting = fetcher.state !== "idle";
   const [isSignUp, setIsSignUp] = useState(false);
-
-  if (session) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950">
-        <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md dark:bg-gray-900 dark:shadow-gray-900/50">
-          <h1 className="mb-6 text-2xl font-bold text-gray-900 dark:text-gray-100">Session</h1>
-          <div className="mb-6 space-y-2">
-            <p className="text-gray-700 dark:text-gray-300">
-              <span className="font-medium">Name:</span> {session.user.name}
-            </p>
-            <p className="text-gray-700 dark:text-gray-300">
-              <span className="font-medium">Email:</span> {session.user.email}
-            </p>
-          </div>
-          <fetcher.Form method="post">
-            <input type="hidden" name="intent" value="sign-out" />
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full rounded-md bg-red-600 px-4 py-2 text-white hover:bg-red-700 disabled:opacity-50"
-            >
-              {isSubmitting ? "Signing Out..." : "Sign Out"}
-            </button>
-          </fetcher.Form>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950">
