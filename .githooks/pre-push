@@ -1,0 +1,14 @@
+#!/bin/sh
+# Pre-push: thorough checks before sharing code
+
+echo "Running typecheck..."
+bun typecheck || {
+  echo "Type errors found."
+  exit 1
+}
+
+echo "Running tests..."
+bunx vitest --run --passWithNoTests || {
+  echo "Tests failed."
+  exit 1
+}
