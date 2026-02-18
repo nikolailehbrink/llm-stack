@@ -2,6 +2,12 @@
 .env
 /node_modules/
 
+# Database
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
 # React Router
 /.react-router/
 /build/
