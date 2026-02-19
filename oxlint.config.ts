@@ -19,6 +19,7 @@ export default defineConfig({
       components: {
         Link: "a",
         NavLink: "a",
+        Label: "label",
       },
     },
   },
@@ -40,6 +41,12 @@ export default defineConfig({
       files: ["*.config.ts", "*.config.js"],
       rules: {
         "import/no-default-export": "off",
+      },
+    },
+    {
+      files: ["app/components/ui/label.tsx"],
+      rules: {
+        "jsx-a11y/label-has-associated-control": "off",
       },
     },
   ],
