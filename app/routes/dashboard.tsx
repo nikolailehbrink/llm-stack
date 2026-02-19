@@ -1,19 +1,14 @@
 import { useFetcher, Link } from "react-router";
 import type { Route } from "./+types/dashboard";
-import { requireAuth } from "~/lib/auth-middleware.server";
 import { sessionContext } from "~/context";
 import { signOut } from "~/lib/auth-client";
-
-export const middleware: Route.MiddlewareFunction[] = [requireAuth];
 
 export function meta() {
   return [{ title: "Dashboard" }];
 }
 
 export async function loader({ context }: Route.LoaderArgs) {
-  const { user, session } = context.get(sessionContext);
-  console.log(session);
-
+  const { user } = context.get(sessionContext);
   return { user };
 }
 
