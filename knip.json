@@ -3,6 +3,5 @@
   "entry": ["app/lib/auth-client.ts"],
   "oxlint": {
     "config": ["oxlint.config.ts"]
-  },
-  "ignoreDependencies": ["shadcn"]
+  }
 }
