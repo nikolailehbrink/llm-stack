@@ -2,6 +2,7 @@ import { useFetcher, Link } from "react-router";
 import type { Route } from "./+types/dashboard";
 import { sessionContext } from "~/context";
 import { signOut } from "~/lib/auth-client";
+import { Button } from "~/components/ui/button";
 
 export function meta() {
   return [{ title: "Dashboard" }];
@@ -30,13 +31,13 @@ export default function Dashboard({ loaderData }: Route.ComponentProps) {
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-600 dark:text-gray-400">{user.email}</span>
             <fetcher.Form method="post">
-              <button
+              <Button
                 type="submit"
                 disabled={isSigningOut}
                 className="rounded-md bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-200 disabled:opacity-50 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
               >
                 {isSigningOut ? "Signing out..." : "Sign out"}
-              </button>
+              </Button>
             </fetcher.Form>
           </div>
         </div>
