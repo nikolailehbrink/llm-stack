@@ -6,6 +6,8 @@ import { signIn, signUp } from "~/lib/auth-client";
 
 export const middleware: Route.MiddlewareFunction[] = [requireGuest];
 
+export function loader() {}
+
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
   const intent = formData.get("intent");
