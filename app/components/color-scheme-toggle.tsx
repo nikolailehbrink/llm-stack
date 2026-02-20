@@ -1,7 +1,8 @@
 import { Form, useRouteLoaderData } from "react-router";
-import type { loader } from "~/root";
-import type { ColorScheme } from "~/lib/color-scheme.server";
+
 import { Button } from "~/components/ui/button";
+import type { ColorScheme } from "~/lib/color-scheme.server";
+import type { loader } from "~/root";
 
 const options: { value: ColorScheme; label: string; icon: React.ReactNode }[] = [
   {

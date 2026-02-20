@@ -1,9 +1,11 @@
 import { Link } from "react-router";
-import type { Route } from "./+types/home";
+
 import { ColorSchemeToggle } from "~/components/color-scheme-toggle";
 import { Button } from "~/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
+
+import type { Route } from "./+types/home";
 
 export function meta({}: Route.MetaArgs) {
   return [

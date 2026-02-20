@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { redirect, useFetcher } from "react-router";
-import type { Route } from "./+types/auth";
-import { requireGuest } from "~/lib/auth-middleware.server";
-import { signIn, signUp } from "~/lib/auth-client";
+
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -14,6 +12,10 @@ import {
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { signIn, signUp } from "~/lib/auth-client";
+import { requireGuest } from "~/lib/auth-middleware.server";
+
+import type { Route } from "./+types/auth";
 
 export const middleware: Route.MiddlewareFunction[] = [requireGuest];
 

@@ -1,6 +1,7 @@
 import { redirect, type RouterContextProvider } from "react-router";
-import { auth } from "~/lib/auth.server";
+
 import { sessionContext } from "~/context";
+import { auth } from "~/lib/auth.server";
 
 export async function requireAuth({
   request,

@@ -1,9 +1,11 @@
 import { useFetcher, Link } from "react-router";
-import type { Route } from "./+types/dashboard";
-import { sessionContext } from "~/context";
-import { signOut } from "~/lib/auth-client";
+
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { sessionContext } from "~/context";
+import { signOut } from "~/lib/auth-client";
+
+import type { Route } from "./+types/dashboard";
 
 export function meta() {
   return [{ title: "Dashboard" }];
