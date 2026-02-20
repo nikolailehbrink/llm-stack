@@ -27,6 +27,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
+    "db:seed": "npx tsx --env-file=.env app/db/seed.ts",
     "db:studio": "drizzle-kit studio",
     "dev": "react-router dev",
     "fmt": "oxfmt",

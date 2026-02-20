@@ -97,6 +97,7 @@ Opens at [http://localhost:5173](http://localhost:5173).
 | `db:push`     | `bun run db:push`     | Push schema to database          |
 | `db:generate` | `bun run db:generate` | Generate migration files         |
 | `db:migrate`  | `bun run db:migrate`  | Run migrations                   |
+| `db:seed`     | `bun run db:seed`     | Seed database with demo user     |
 | `db:studio`   | `bun run db:studio`   | Open Drizzle Studio              |
 
 ## Project Structure

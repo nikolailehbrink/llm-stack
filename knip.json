@@ -4,5 +4,6 @@
   "oxlint": {
     "config": ["oxlint.config.ts"]
   },
+  "ignoreBinaries": ["tsx"],
   "ignore": ["app/components/ui/**", ".vscode/**"]
 }

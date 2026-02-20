@@ -25,6 +25,7 @@ Package manager is **Bun** (not npm/yarn/pnpm).
 | DB push schema        | `bun run db:push`                              |
 | DB generate migration | `bun run db:generate`                          |
 | DB run migrations     | `bun run db:migrate`                           |
+| DB seed               | `bun run db:seed`                              |
 | DB studio             | `bun run db:studio`                            |
 
 ## Architecture
