@@ -10,6 +10,7 @@ Package manager is **Bun** (not npm/yarn/pnpm).
 
 | Task                  | Command                                        |
 | --------------------- | ---------------------------------------------- |
+| Setup (first time)    | `bun run setup`                                |
 | Dev server            | `bun run dev` (opens at http://localhost:5173) |
 | Build                 | `bun run build`                                |
 | Start prod server     | `bun run start`                                |

@@ -37,6 +37,7 @@
     "lint:fix": "oxlint --fix",
     "prepare": "git config core.hooksPath .githooks",
     "preview": "vite preview",
+    "setup": "bun install && bun scripts/setup.ts",
     "start": "react-router-serve build/server/index.js",
     "test": "vitest --passWithNoTests",
     "typecheck": "react-router typegen && tsc"

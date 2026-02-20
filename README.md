@@ -37,39 +37,15 @@ A full-stack React starter template, optimized for AI-assisted development. Conf
 
 - [Bun](https://bun.sh/) (v1.3.9 or later)
 
-### Installation
+### Setup
 
 ```sh
 git clone https://github.com/nikolailehbrink/llm-stack.git
 cd llm-stack
-bun install
+bun run setup
 ```
 
-### Environment Variables
-
-Create a `.env` file in the project root:
-
-```sh
-BETTER_AUTH_SECRET=<your-secret-key>
-BETTER_AUTH_URL=http://localhost:5173
-DATABASE_URL=sqlite.db
-```
-
-Generate a secret key:
-
-```sh
-openssl rand -base64 32
-```
-
-### Database Setup
-
-Push the schema to create the SQLite database:
-
-```sh
-bun run db:push
-```
-
-This creates the `user`, `session`, `account`, and `verification` tables.
+This will install dependencies, create a `.env` file with a generated secret, push the database schema, and seed a demo user (`demo@llmstack.dev` / `password123`).
 
 ### Development
 
@@ -83,6 +59,7 @@ Opens at [http://localhost:5173](http://localhost:5173).
 
 | Script        | Command               | Description                      |
 | ------------- | --------------------- | -------------------------------- |
+| `setup`       | `bun run setup`       | First-time project setup         |
 | `dev`         | `bun run dev`         | Start dev server with HMR        |
 | `build`       | `bun run build`       | Production build                 |
 | `start`       | `bun run start`       | Production server                |
