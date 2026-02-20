@@ -96,18 +96,18 @@ export default function AuthPage() {
             </Button>
           </fetcher.Form>
         </CardContent>
-        <CardFooter className="justify-center">
+        <CardFooter className="justify-center gap-1">
           <p className="text-sm text-muted-foreground">
             {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
-            <Button
-              type="button"
-              variant="link"
-              className="h-auto p-0"
-              onClick={() => setIsSignUp(!isSignUp)}
-            >
-              {isSignUp ? "Sign In" : "Sign Up"}
-            </Button>
           </p>
+          <Button
+            type="button"
+            variant="link"
+            className="h-auto p-0"
+            onClick={() => setIsSignUp(!isSignUp)}
+          >
+            {isSignUp ? "Sign In" : "Sign Up"}
+          </Button>
         </CardFooter>
       </Card>
     </div>
