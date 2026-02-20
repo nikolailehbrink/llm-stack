@@ -34,7 +34,7 @@ export default defineConfig({
     "import/no-unassigned-import": ["error", { allow: ["**/*.css"] }],
     "no-empty-pattern": "off",
     "unicorn/no-unnecessary-await": "warn",
-    "jsx-a11y/anchor-is-valid": ["warn", { validHrefs: ["to"] }],
+    "jsx-a11y/anchor-is-valid": "off",
   },
   overrides: [
     {

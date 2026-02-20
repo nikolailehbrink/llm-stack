@@ -11,3 +11,12 @@
 # React Router
 /.react-router/
 /build/
+
+# TypeScript
+*.tsbuildinfo
+
+# Drizzle
+/drizzle/
+
+# Claude Code
+.claude/

@@ -5,7 +5,7 @@
       "url": "https://mcp.inkeep.com/better-auth/mcp"
     },
     "chrome-devtools": {
-      "command": "npx",
+      "command": "bunx",
       "args": ["chrome-devtools-mcp@latest"]
     },
     "context7": {
@@ -13,7 +13,7 @@
       "url": "https://mcp.context7.com/mcp"
     },
     "shadcn": {
-      "command": "npx",
+      "command": "bunx",
       "args": ["shadcn@latest", "mcp"]
     }
   }
