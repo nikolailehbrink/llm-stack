@@ -6,5 +6,7 @@
     "functions": ["clsx", "cn"]
   },
   "experimentalSortImports": {},
-  "experimentalSortPackageJson": true
+  "experimentalSortPackageJson": {
+    "sortScripts": true
+  }
 }
