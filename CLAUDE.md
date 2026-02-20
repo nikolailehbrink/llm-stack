@@ -12,7 +12,8 @@ Package manager is **Bun** (not npm/yarn/pnpm).
 | --------------------- | ---------------------------------------------- |
 | Dev server            | `bun run dev` (opens at http://localhost:5173) |
 | Build                 | `bun run build`                                |
-| Preview prod build    | `bun run preview`                              |
+| Start prod server     | `bun run start`                                |
+| Preview build         | `bun run preview`                              |
 | Typecheck             | `bun run typecheck`                            |
 | Lint                  | `bun run lint`                                 |
 | Lint (autofix)        | `bun run lint:fix`                             |

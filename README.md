@@ -85,7 +85,8 @@ Opens at [http://localhost:5173](http://localhost:5173).
 | ------------- | --------------------- | -------------------------------- |
 | `dev`         | `bun run dev`         | Start dev server with HMR        |
 | `build`       | `bun run build`       | Production build                 |
-| `preview`     | `bun run preview`     | Preview production build         |
+| `start`       | `bun run start`       | Production server                |
+| `preview`     | `bun run preview`     | Preview build with Vite          |
 | `typecheck`   | `bun run typecheck`   | Generate route types and run tsc |
 | `lint`        | `bun run lint`        | Run oxlint                       |
 | `lint:fix`    | `bun run lint:fix`    | Run oxlint with auto-fix         |
@@ -194,13 +195,6 @@ Hooks are stored in `.githooks/` and activated automatically on `bun install` vi
 5. `requireGuest` middleware redirects authenticated users away from `/auth`
 
 Auth mutations use `clientAction` exports (browser-side) because Better Auth's client manages session cookies directly.
-
-## Docker
-
-```sh
-docker build -t llm-stack .
-docker run -p 3000:3000 llm-stack
-```
 
 ## License
 
