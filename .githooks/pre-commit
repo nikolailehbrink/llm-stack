@@ -1,8 +1,8 @@
 #!/bin/sh
 # Pre-commit: auto-format staged files, then run lint and knip checks
 
-# Get staged files (added, copied, modified, renamed)
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR)
+# Get staged formattable files (added, copied, modified, renamed)
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR -- '*.ts' '*.tsx' '*.js' '*.jsx' '*.json' '*.css')
 
 if [ -n "$STAGED_FILES" ]; then
   echo "Formatting staged files..."

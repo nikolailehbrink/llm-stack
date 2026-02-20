@@ -66,7 +66,7 @@ Uses **shadcn** with **base-ui** primitives (not Radix). Components installed vi
 - **Formatter:** oxfmt (not Prettier) — configured in `.oxfmtrc.json` with Tailwind class sorting
 - **Linter:** oxlint (not ESLint) — configured in `oxlint.config.ts`
 - **Commits:** Conventional commits enforced via commitlint
-- **Git hooks** (`.githooks/`): pre-commit runs fmt:check + lint + knip; pre-push runs typecheck + tests; commit-msg runs commitlint
+- **Git hooks** (`.githooks/`): pre-commit auto-formats + lint + knip; pre-push runs typecheck + tests; commit-msg runs commitlint
 
 ### Environment variables
 
