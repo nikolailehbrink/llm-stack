@@ -4,5 +4,5 @@
   "oxlint": {
     "config": ["oxlint.config.ts"]
   },
-  "ignore": ["app/components/ui/**"]
+  "ignore": ["app/components/ui/**", ".vscode/**"]
 }
