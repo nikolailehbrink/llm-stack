@@ -1,11 +1,16 @@
 #!/bin/sh
-# Pre-commit: fast checks to catch issues before committing
+# Pre-commit: auto-format staged files, then run lint and knip checks
 
-echo "Running format check..."
-bun run fmt:check || {
-  echo "Formatting issues found. Run 'bun run fmt' to fix."
-  exit 1
-}
+# Get staged files (added, copied, modified, renamed)
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR)
+
+if [ -n "$STAGED_FILES" ]; then
+  echo "Formatting staged files..."
+  echo "$STAGED_FILES" | xargs bun run fmt
+
+  # Re-stage the formatted files
+  echo "$STAGED_FILES" | xargs git add
+fi
 
 echo "Running linter..."
 bun run lint || {
