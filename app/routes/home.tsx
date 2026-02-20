@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import type { Route } from "./+types/home";
-import { buttonVariants } from "~/components/ui/button";
+import { ColorSchemeToggle } from "~/components/color-scheme-toggle";
+import { Button } from "~/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 
 export function meta({}: Route.MetaArgs) {
@@ -81,9 +82,12 @@ const llmFeatures = [
   },
 ];
 
-const tooling = [
+const tooling: { title: string; description: string }[] = [
   { title: "Vitest", description: "Fast unit and integration testing" },
-  { title: "oxfmt", description: "Rust-based formatter with Tailwind class sorting" },
+  {
+    title: "oxfmt",
+    description: "Rust-based formatter with Tailwind class sorting",
+  },
   {
     title: "oxlint",
     description: "Rust-based linter with jsx-a11y, unicorn, and React plugins",
@@ -102,27 +106,26 @@ const tooling = [
 
 export default function Home() {
   return (
-    <div className="container mx-auto flex min-h-screen flex-col items-center px-4 py-16">
+    <div className="container mx-auto flex min-h-screen flex-col items-center gap-8 px-4 py-8 sm:py-16">
+      <header className="flex w-full max-w-4xl justify-end">
+        <ColorSchemeToggle />
+      </header>
+
       {/* Hero */}
-      <section className="flex max-w-2xl flex-col items-center gap-6 pt-16 pb-24 text-center">
-        <h1 className="text-4xl font-bold tracking-tight">LLM Stack</h1>
+      <section className="flex w-full max-w-4xl flex-col items-center gap-6 rounded-xl bg-background py-20 text-center text-foreground scheme-dark dark:scheme-light">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">LLM Stack</h1>
         <p className="text-lg text-muted-foreground">
-          A full-stack React starter optimized for AI-assisted development. Built with React Router
-          7, Better Auth, Drizzle ORM, and Tailwind CSS v4 — configured so LLM agents can
-          understand, modify, and extend the codebase from day one.
+          A full-stack React starter template, optimized for AI-assisted development. <br />{" "}
+          Configured so LLM agents can understand, modify, and extend the codebase.
         </p>
         <div className="flex gap-3">
-          <Link to="/auth" className={buttonVariants()}>
-            Get Started
-          </Link>
-          <Link to="/dashboard" className={buttonVariants({ variant: "outline" })}>
-            Dashboard
-          </Link>
+          <Button render={<Link to="/auth">Get Started</Link>} />
+          <Button variant="outline" render={<Link to="/dashboard">Dashboard</Link>} />
         </div>
       </section>
 
       {/* Tech Stack */}
-      <section className="flex w-full max-w-4xl flex-col gap-4 pb-16">
+      <section className="flex w-full max-w-4xl flex-col gap-4">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight">Tech Stack</h2>
           <p className="text-muted-foreground">
@@ -142,7 +145,7 @@ export default function Home() {
       </section>
 
       {/* LLM-Optimized */}
-      <section className="flex w-full max-w-4xl flex-col gap-4 pb-16">
+      <section className="flex w-full max-w-4xl flex-col gap-4">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight">LLM-Optimized</h2>
           <p className="text-muted-foreground">
@@ -162,7 +165,7 @@ export default function Home() {
       </section>
 
       {/* Tooling */}
-      <section className="flex w-full max-w-4xl flex-col gap-4 pb-16">
+      <section className="flex w-full max-w-4xl flex-col gap-4">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight">Tooling</h2>
           <p className="text-muted-foreground">
