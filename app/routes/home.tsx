@@ -227,15 +227,19 @@ export default function Home() {
         </header>
 
         {/* Hero */}
-        <section className="flex w-full max-w-4xl flex-col items-center gap-4 rounded-xl bg-background py-20 text-center text-foreground scheme-dark dark:scheme-light">
+        <section className="flex w-full max-w-4xl flex-col items-center gap-4 rounded-xl bg-background px-8 py-20 text-center text-foreground scheme-dark dark:scheme-light">
           <h1 className="font-serif text-3xl sm:text-5xl">LLM Stack</h1>
           <p className="text-muted-foreground">
             A full-stack React starter template, optimized for AI-assisted development. <br />{" "}
             Configured so LLM agents can understand, modify, and extend the codebase.
           </p>
           <div className="mt-2 flex gap-4">
-            <Button render={<Link to="/auth">Get Started</Link>} />
-            <Button variant="outline" render={<Link to="/dashboard">Dashboard</Link>} />
+            <Button nativeButton={false} render={<Link to="/auth">Get Started</Link>} />
+            <Button
+              variant="outline"
+              nativeButton={false}
+              render={<Link to="/dashboard">Dashboard</Link>}
+            />
           </div>
         </section>
 
