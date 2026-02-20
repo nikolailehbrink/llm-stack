@@ -29,4 +29,4 @@ run("bun run db:push");
 // 3. Seed database
 run("bun run db:seed");
 
-console.log("\nSetup complete! Run 'bun run dev' to start developing.");
+console.log("\nSetup complete!");
