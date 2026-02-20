@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "@fontsource-variable/inter";
+@import "@fontsource/instrument-serif";
 
 @custom-variant dark {
   &:where(.dark, .dark *) {
@@ -15,8 +17,9 @@
 
 @theme {
   --font-sans:
-    "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Inter Variable", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: "Instrument Serif", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 @theme inline {
@@ -96,26 +99,26 @@
   --sidebar-ring: light-dark(oklch(0.708 0 0), oklch(0.556 0 0));
 }
 
-.light,
-.dark,
-.system {
-  @apply bg-background text-foreground;
-}
-
-.light {
-  color-scheme: light;
-}
-
-.dark {
-  color-scheme: dark;
-}
-
-.system {
-  color-scheme: light dark;
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+
+  .light,
+  .dark,
+  .system {
+    @apply bg-background text-foreground;
+  }
+
+  .light {
+    color-scheme: light;
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
+  .system {
+    color-scheme: light dark;
   }
 }

@@ -112,13 +112,13 @@ export default function Home() {
       </header>
 
       {/* Hero */}
-      <section className="flex w-full max-w-4xl flex-col items-center gap-6 rounded-xl bg-background py-20 text-center text-foreground scheme-dark dark:scheme-light">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">LLM Stack</h1>
-        <p className="text-lg text-muted-foreground">
+      <section className="flex w-full max-w-4xl flex-col items-center gap-4 rounded-xl bg-background py-20 text-center text-foreground scheme-dark dark:scheme-light">
+        <h1 className="font-serif text-3xl sm:text-5xl">LLM Stack</h1>
+        <p className="text-muted-foreground">
           A full-stack React starter template, optimized for AI-assisted development. <br />{" "}
           Configured so LLM agents can understand, modify, and extend the codebase.
         </p>
-        <div className="flex gap-3">
+        <div className="mt-2 flex gap-4">
           <Button render={<Link to="/auth">Get Started</Link>} />
           <Button variant="outline" render={<Link to="/dashboard">Dashboard</Link>} />
         </div>
@@ -126,8 +126,8 @@ export default function Home() {
 
       {/* Tech Stack */}
       <section className="flex w-full max-w-4xl flex-col gap-4">
-        <div>
-          <h2 className="text-2xl font-semibold tracking-tight">Tech Stack</h2>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-serif text-4xl">Tech Stack</h2>
           <p className="text-muted-foreground">
             Modern, type-safe technologies for full-stack apps.
           </p>
@@ -146,8 +146,8 @@ export default function Home() {
 
       {/* LLM-Optimized */}
       <section className="flex w-full max-w-4xl flex-col gap-4">
-        <div>
-          <h2 className="text-2xl font-semibold tracking-tight">LLM-Optimized</h2>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-serif text-4xl">LLM-Optimized</h2>
           <p className="text-muted-foreground">
             Built so AI agents can understand and contribute to the project effectively.
           </p>
@@ -166,8 +166,8 @@ export default function Home() {
 
       {/* Tooling */}
       <section className="flex w-full max-w-4xl flex-col gap-4">
-        <div>
-          <h2 className="text-2xl font-semibold tracking-tight">Tooling</h2>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-serif text-4xl">Tooling</h2>
           <p className="text-muted-foreground">
             Fast, strict tooling for a reliable development workflow.
           </p>
