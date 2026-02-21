@@ -34,7 +34,7 @@ const techStack = [
     description: "Type-safe SQLite database with better-sqlite3 and WAL mode for fast reads.",
   },
   {
-    title: "Tailwind CSS v4",
+    title: "Tailwind CSS 4",
     description:
       "Utility-first styling with shadcn components, base-ui primitives, and design tokens.",
   },
@@ -131,7 +131,7 @@ const deps: PackageEntry[] = [
   },
   {
     name: "zod",
-    title: "Zod v4",
+    title: "Zod 4",
     url: "https://zod.dev",
     description: "Schema validation with full TypeScript type inference.",
     ai: "Agents define data shapes once and get runtime validation plus static types automatically.",
@@ -141,7 +141,7 @@ const deps: PackageEntry[] = [
 const toolingDeps: PackageEntry[] = [
   {
     name: "tailwindcss",
-    title: "Tailwind CSS v4",
+    title: "Tailwind CSS 4",
     url: "https://tailwindcss.com",
     description: "Utility-first CSS framework with design tokens and dark mode.",
     ai: "Agents compose styles directly in markup — no context-switching to separate CSS files.",
