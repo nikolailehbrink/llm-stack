@@ -1,6 +1,14 @@
-import { Form, useRouteLoaderData } from "react-router";
+import * as React from "react";
+import { useFetcher, useRouteLoaderData } from "react-router";
 
 import { Button } from "~/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 import type { ColorScheme } from "~/lib/color-scheme.server";
 import type { loader } from "~/root";
 
@@ -74,23 +82,38 @@ const options: { value: ColorScheme; label: string; icon: React.ReactNode }[] = 
 export function ColorSchemeToggle() {
   const loaderData = useRouteLoaderData<typeof loader>("root");
   const current = loaderData?.colorScheme ?? "system";
+  const fetcher = useFetcher();
+
+  const currentOption = options.find((o) => o.value === current) ?? options[2];
+
+  const [open, setOpen] = React.useState(false);
 
   return (
-    <Form method="POST" action="/api/color-scheme" navigate={false} className="flex gap-1">
-      {options.map((option) => (
-        <Button
-          key={option.value}
-          type="submit"
-          name="colorScheme"
-          value={option.value}
-          variant={current === option.value ? "outline" : "ghost"}
-          size="icon-sm"
-          aria-label={option.label}
-          aria-pressed={current === option.value}
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger
+        render={<Button variant="outline" size="icon-sm" aria-label="Toggle color scheme" />}
+      >
+        {currentOption.icon}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuRadioGroup
+          value={current}
+          onValueChange={(value) => {
+            fetcher.submit(
+              { colorScheme: value as ColorScheme },
+              { method: "POST", action: "/api/color-scheme" },
+            );
+            setOpen(false);
+          }}
         >
-          {option.icon}
-        </Button>
-      ))}
-    </Form>
+          {options.map((option) => (
+            <DropdownMenuRadioItem key={option.value} value={option.value}>
+              {option.icon}
+              {option.label}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
