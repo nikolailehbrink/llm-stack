@@ -18,46 +18,6 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-const techStack = [
-  {
-    title: "React Router 7",
-    description:
-      "Framework mode with SSR, typed routes, and middleware support for full-stack apps.",
-  },
-  {
-    title: "Better Auth",
-    description:
-      "Email/password authentication with Drizzle adapter and session middleware out of the box.",
-  },
-  {
-    title: "Drizzle ORM",
-    description: "Type-safe SQLite database with better-sqlite3 and WAL mode for fast reads.",
-  },
-  {
-    title: "Tailwind CSS 4",
-    description:
-      "Utility-first styling with shadcn components, base-ui primitives, and design tokens.",
-  },
-  {
-    title: "React 19",
-    description: "Latest React with server rendering, streaming, and concurrent features.",
-  },
-  {
-    title: "TypeScript",
-    description: "Strict types throughout with auto-generated route types for full type safety.",
-  },
-  {
-    title: "Vite 7",
-    description:
-      "Fast dev server and optimized production builds with HMR and Tailwind integration.",
-  },
-  {
-    title: "Bun",
-    description:
-      "Fast JavaScript runtime and package manager with exact version pinning via .npmrc.",
-  },
-];
-
 const llmFeatures = [
   {
     title: "CLAUDE.md",
@@ -100,6 +60,13 @@ const deps: PackageEntry[] = [
     url: "https://base-ui.com",
     description: "Unstyled, accessible UI primitives powering shadcn components.",
     ai: "Agents get consistent, composable building blocks without fighting opinionated styling.",
+  },
+  {
+    name: "@fontsource",
+    title: "Fontsource",
+    url: "https://fontsource.org",
+    description: "Self-hosted open-source fonts — Inter and Instrument Serif loaded locally.",
+    ai: "No external font requests — agents get consistent typography without CDN dependencies.",
   },
   {
     name: "better-auth",
@@ -195,8 +162,8 @@ const toolingDeps: PackageEntry[] = [
 
 function DependencyLine({ entry, isLast }: { entry: PackageEntry; isLast: boolean }) {
   return (
-    <span>
-      <span className="text-background/50">{"    "}</span>
+    <span className="text-foreground/50">
+      <span>{"    "}</span>
       <Tooltip>
         <TooltipTrigger
           render={
@@ -204,12 +171,9 @@ function DependencyLine({ entry, isLast }: { entry: PackageEntry; isLast: boolea
               {`"${entry.name}"`}
             </a>
           }
-          className="rounded-sm border-b border-dashed border-background/25 px-0.5 text-background transition-all hover:border-background/50 hover:bg-background/10"
+          className="rounded-sm border-b border-dashed border-foreground/25 px-0.5 text-foreground transition-all hover:border-foreground/50 hover:bg-foreground/10"
         />
-        <TooltipContent
-          side="top"
-          className="flex max-w-xs flex-col gap-1.5 rounded-sm scheme-dark shadow-xl dark:scheme-light"
-        >
+        <TooltipContent side="top" className="flex max-w-xs flex-col gap-1.5 rounded-sm shadow-xl">
           <p className="text-sm font-semibold">{entry.title}</p>
           <p>{entry.description}</p>
           <p className="border-t border-current/10 pt-1.5 opacity-70">AI: {entry.ai}</p>
@@ -248,20 +212,59 @@ export default function Home() {
         {/* Tech Stack */}
         <section className="flex w-full max-w-4xl flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <h2 className="font-serif text-3xl">Tech Stack</h2>
+            <h2 className="font-serif text-3xl">Tooling</h2>
             <p className="text-muted-foreground">
-              Modern, type-safe technologies for full-stack apps.
+              Everything that powers the stack. Hover the dependencies to learn more.
             </p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {techStack.map((item) => (
-              <Card key={item.title}>
-                <CardHeader>
-                  <CardTitle>{item.title}</CardTitle>
-                  <CardDescription>{item.description}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
+          <div className="relative w-full">
+            {/* Left gradient line */}
+            <div className="absolute top-[15%] bottom-[10%] left-0 z-10 w-px bg-linear-to-b from-transparent via-foreground/20 to-transparent" />
+            {/* Right gradient line */}
+            <div className="absolute top-[10%] right-0 bottom-[20%] z-10 w-px bg-linear-to-b from-transparent via-foreground/25 to-transparent" />
+            {/* Top gradient line */}
+            <div className="absolute top-0 right-[20%] left-[10%] z-10 h-px bg-linear-to-r from-transparent via-foreground/20 to-transparent" />
+            {/* Bottom gradient line */}
+            <div className="absolute right-[10%] bottom-0 left-[25%] z-10 h-px bg-linear-to-r from-transparent via-foreground/15 to-transparent" />
+            <div className="overflow-hidden rounded-xl border border-border bg-card">
+              <pre className="flex justify-center p-6 font-mono text-xs leading-relaxed wrap-break-word whitespace-pre-wrap sm:p-8 sm:text-sm">
+                <code className="text-foreground/50">
+                  <span>{"{"}</span>
+                  {"\n"}
+                  <span>{"  "}</span>
+                  <span>{'"dependencies"'}</span>
+                  <span>{": ["}</span>
+                  {"\n"}
+                  <span className="flex flex-col">
+                    {deps.map((entry, i) => (
+                      <DependencyLine
+                        key={entry.name}
+                        entry={entry}
+                        isLast={i === deps.length - 1}
+                      />
+                    ))}
+                  </span>
+                  <span>{"  ],"}</span>
+                  {"\n"}
+                  <span>{"  "}</span>
+                  <span>{'"devDependencies"'}</span>
+                  <span>{": ["}</span>
+                  {"\n"}
+                  <span className="flex flex-col">
+                    {toolingDeps.map((entry, i) => (
+                      <DependencyLine
+                        key={entry.name}
+                        entry={entry}
+                        isLast={i === toolingDeps.length - 1}
+                      />
+                    ))}
+                  </span>
+                  <span>{"  ]"}</span>
+                  {"\n"}
+                  <span>{"}"}</span>
+                </code>
+              </pre>
+            </div>
           </div>
         </section>
 
@@ -282,52 +285,6 @@ export default function Home() {
                 </CardHeader>
               </Card>
             ))}
-          </div>
-        </section>
-
-        {/* Tooling */}
-        <section className="flex w-full max-w-4xl flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <h2 className="font-serif text-3xl">Tooling</h2>
-            <p className="text-muted-foreground">
-              Fast, strict tooling for a reliable development workflow. Hover the dependencies to
-              learn more.
-            </p>
-          </div>
-          <div className="w-full overflow-hidden rounded-xl bg-foreground">
-            <pre className="p-6 font-mono text-xs leading-relaxed wrap-break-word whitespace-pre-wrap sm:p-8 sm:text-sm">
-              <code>
-                <span className="text-background/50">{"{"}</span>
-                {"\n"}
-                <span className="text-background/50">{"  "}</span>
-                <span className="text-background/50">{'"dependencies"'}</span>
-                <span className="text-background/50">{": ["}</span>
-                {"\n"}
-                <span className="flex flex-col">
-                  {deps.map((entry, i) => (
-                    <DependencyLine key={entry.name} entry={entry} isLast={i === deps.length - 1} />
-                  ))}
-                </span>
-                <span className="text-background/50">{"  ],"}</span>
-                {"\n"}
-                <span className="text-background/50">{"  "}</span>
-                <span className="text-background/50">{'"devDependencies"'}</span>
-                <span className="text-background/50">{": ["}</span>
-                {"\n"}
-                <span className="flex flex-col">
-                  {toolingDeps.map((entry, i) => (
-                    <DependencyLine
-                      key={entry.name}
-                      entry={entry}
-                      isLast={i === toolingDeps.length - 1}
-                    />
-                  ))}
-                </span>
-                <span className="text-background/50">{"  ]"}</span>
-                {"\n"}
-                <span className="text-background/50">{"}"}</span>
-              </code>
-            </pre>
           </div>
         </section>
       </div>
