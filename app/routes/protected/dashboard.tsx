@@ -86,13 +86,13 @@ export default function Dashboard({ loaderData }: Route.ComponentProps) {
                 <div>
                   <dt className="text-xs text-muted-foreground">Created</dt>
                   <dd className="text-sm font-medium">
-                    {new Date(user.createdAt).toLocaleDateString()}
+                    {new Date(user.createdAt).toLocaleDateString("en-US")}
                   </dd>
                 </div>
                 <div>
                   <dt className="text-xs text-muted-foreground">Updated</dt>
                   <dd className="text-sm font-medium">
-                    {new Date(user.updatedAt).toLocaleDateString()}
+                    {new Date(user.updatedAt).toLocaleDateString("en-US")}
                   </dd>
                 </div>
               </dl>

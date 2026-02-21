@@ -80,13 +80,21 @@ export default function AuthPage() {
                 name="email"
                 type="email"
                 required
+                autoComplete="email"
                 placeholder="max.mustermann@web.de"
               />
             </div>
 
             <div className="flex flex-col gap-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" name="password" type="password" required minLength={8} />
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                required
+                minLength={8}
+                autoComplete={isSignUp ? "new-password" : "current-password"}
+              />
             </div>
 
             {fetcher.data?.error && (
