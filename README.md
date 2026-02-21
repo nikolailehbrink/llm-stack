@@ -16,7 +16,7 @@ A full-stack React starter template, optimized for AI-assisted development. Conf
 | Testing     | [Vitest](https://vitest.dev/)                                                                                                                     |
 | Unused code | [Knip](https://knip.dev/)                                                                                                                         |
 | Commits     | [Conventional Commits](https://www.conventionalcommits.org/) via [commitlint](https://commitlint.js.org/)                                         |
-| Runtime     | [Bun](https://bun.sh/)                                                                                                                            |
+| Runtime     | [Bun](https://bun.sh/) (also works with Node.js and Deno)                                                                                         |
 | Bundler     | [Vite 7](https://vite.dev/)                                                                                                                       |
 | Language    | [TypeScript](https://www.typescriptlang.org/) (strict mode)                                                                                       |
 
@@ -54,6 +54,33 @@ bun run dev
 ```
 
 Opens at [http://localhost:5173](http://localhost:5173).
+
+### Using a Different Package Manager
+
+The project defaults to Bun, but the app code is runtime-agnostic and works with npm, pnpm, or Deno. Replace `bun` commands accordingly:
+
+| Bun                | npm                | pnpm                | Deno                 |
+| ------------------ | ------------------ | -------------------- | -------------------- |
+| `bun install`      | `npm install`      | `pnpm install`       | `deno install`       |
+| `bun run dev`      | `npm run dev`      | `pnpm dev`           | `deno task dev`      |
+| `bun run build`    | `npm run build`    | `pnpm build`         | `deno task build`    |
+| `bun run setup`    | `npm run setup`    | `pnpm setup`         | `deno task setup`    |
+| `bun run <script>` | `npm run <script>` | `pnpm <script>`      | `deno task <script>` |
+
+When using a different package manager, update the `setup` script in `package.json`:
+
+```jsonc
+// npm:
+"setup": "npm install && npx tsx scripts/setup.ts && npm run dev"
+
+// pnpm:
+"setup": "pnpm install && pnpm tsx scripts/setup.ts && pnpm dev"
+
+// Deno:
+"setup": "deno install && deno run -A scripts/setup.ts && deno task dev"
+```
+
+You may also want to remove the `packageManager` field from `package.json` or update it to match your chosen package manager.
 
 ## Scripts
 
