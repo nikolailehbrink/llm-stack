@@ -18,30 +18,86 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-const llmFeatures = [
+const llmFeatureGroups = [
   {
-    title: "CLAUDE.md",
-    description:
-      "Project context file that Claude Code reads automatically to understand the codebase.",
+    heading: "Project Context",
+    items: [
+      {
+        title: "CLAUDE.md & AGENTS.md",
+        description:
+          "Project context and mandatory rules that agents read automatically. Covers commands, architecture, auth flow, DB, component library, and code style.",
+      },
+    ],
   },
   {
-    title: "AGENTS.md",
-    description:
-      "Mandatory rules for AI agents covering component library, routing, auth, testing, and code style.",
+    heading: "Custom Skills",
+    items: [
+      {
+        title: "React Router 7 Skill",
+        description:
+          "Framework mode patterns for routes, loaders, actions, middleware, and nested layouts — beyond training cutoff.",
+      },
+      {
+        title: "Better Auth Skills",
+        description:
+          "Email/password, 2FA, organizations, and security best practices — pre-wired patterns agents follow.",
+      },
+      {
+        title: "React Best Practices Skill",
+        description:
+          "Vercel's performance optimization guidelines for React 19 and server rendering patterns.",
+      },
+      {
+        title: "Frontend Design Skill",
+        description:
+          "Generates distinctive, production-grade UI with creative typography, color, and motion — avoids generic AI aesthetics.",
+      },
+      {
+        title: "Composition Patterns Skill",
+        description:
+          "Compound components, render props, and scalable React APIs from Vercel Engineering.",
+      },
+    ],
   },
   {
-    title: "11 Custom Skills",
-    description:
-      "React Router framework mode, Better Auth patterns, security, 2FA, composition patterns, design, and more.",
+    heading: "MCP Servers",
+    items: [
+      {
+        title: "shadcn MCP",
+        description:
+          "Agents search, preview, and install base-ui components from the registry without leaving the editor.",
+      },
+      {
+        title: "Context7 MCP",
+        description:
+          "Fetches up-to-date documentation and code examples for any library — no stale training data.",
+      },
+      {
+        title: "Better Auth MCP",
+        description:
+          "Searches auth docs and asks an AI support agent about Better Auth features and troubleshooting.",
+      },
+      {
+        title: "Chrome DevTools MCP",
+        description:
+          "Inspects the page, optimizes LCP, catches console errors, and runs performance traces.",
+      },
+    ],
   },
   {
-    title: "3 MCP Servers",
-    description:
-      "shadcn for UI components, Better Auth for auth docs, and Context7 for up-to-date library docs.",
-  },
-  {
-    title: "Conventional Commits",
-    description: "Structured commit messages that agents follow automatically via commitlint.",
+    heading: "Tooling & DX",
+    items: [
+      {
+        title: "Conventional Commits",
+        description:
+          "Structured commit messages enforced by commitlint — agents follow the convention automatically.",
+      },
+      {
+        title: "Fast Tooling",
+        description:
+          "oxfmt, oxlint, and Knip are Rust-based and run in milliseconds — agents get instant feedback on every change.",
+      },
+    ],
   },
 ];
 
@@ -269,23 +325,30 @@ export default function Home() {
         </section>
 
         {/* LLM-Optimized */}
-        <section className="flex w-full max-w-4xl flex-col gap-4">
+        <section className="flex w-full max-w-4xl flex-col gap-6">
           <div className="flex flex-col gap-2">
             <h2 className="font-serif text-3xl">LLM-Optimized</h2>
             <p className="text-muted-foreground">
               Built so AI agents can understand and contribute to the project effectively.
             </p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {llmFeatures.map((item) => (
-              <Card key={item.title}>
-                <CardHeader>
-                  <CardTitle>{item.title}</CardTitle>
-                  <CardDescription>{item.description}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
+          {llmFeatureGroups.map((group) => (
+            <div key={group.heading} className="flex flex-col gap-3">
+              <h3 className="text-sm font-medium tracking-wide text-muted-foreground uppercase">
+                {group.heading}
+              </h3>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {group.items.map((item) => (
+                  <Card key={item.title}>
+                    <CardHeader>
+                      <CardTitle>{item.title}</CardTitle>
+                      <CardDescription>{item.description}</CardDescription>
+                    </CardHeader>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          ))}
         </section>
       </div>
     </TooltipProvider>
