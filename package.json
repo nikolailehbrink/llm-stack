@@ -23,6 +23,7 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
+    "clean": "rm -rf node_modules .react-router build",
     "commitlint": "commitlint",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
