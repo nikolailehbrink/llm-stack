@@ -144,22 +144,18 @@ export default function AuthPage() {
   const funFact = useMemo(() => funFacts[Math.floor(Math.random() * funFacts.length)], []);
 
   return (
-    <div className="flex min-h-screen flex-col bg-muted">
-      {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-3">
-          <Link to="/" className="font-serif text-lg">
-            LLM Stack
-          </Link>
-          <ColorSchemeToggle />
-        </div>
+    <div className="container mx-auto flex min-h-screen flex-col items-center gap-8 px-4 py-8">
+      <header className="flex w-full max-w-4xl items-center justify-between">
+        <Link to="/" className="font-serif text-lg">
+          LLM Stack
+        </Link>
+        <ColorSchemeToggle />
       </header>
 
-      {/* Main */}
-      <main className="flex flex-1 items-center justify-center px-4 py-8">
-        <div className="w-full max-w-sm md:max-w-4xl">
+      <main className="flex flex-1 items-center justify-center">
+        <div className="w-full max-w-sm sm:-mt-16 md:max-w-4xl">
           <div className="mx-auto mb-6 flex max-w-lg flex-col items-center gap-2 text-center">
-            <p className="font-serif text-lg italic">Did you know?</p>
+            <p className="font-serif text-xl italic">Did you know?</p>
             <p className="text-sm leading-relaxed text-muted-foreground">{funFact}</p>
           </div>
 

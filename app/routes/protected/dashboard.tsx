@@ -138,7 +138,7 @@ export default function Dashboard({ loaderData }: Route.ComponentProps) {
                     <fetcher.Form method="post">
                       <Button
                         type="submit"
-                        variant="ghost"
+                        variant="outline"
                         size="icon-sm"
                         disabled={isSigningOut}
                         aria-label="Sign out"

@@ -223,7 +223,7 @@ function DependencyLine({ entry, isLast }: { entry: PackageEntry; isLast: boolea
 export default function Home() {
   return (
     <TooltipProvider>
-      <div className="container mx-auto flex min-h-screen flex-col items-center gap-8 px-4 py-8 sm:py-16">
+      <div className="container mx-auto flex min-h-screen flex-col items-center gap-8 px-4 py-8">
         <header className="flex w-full max-w-4xl justify-end">
           <ColorSchemeToggle />
         </header>
@@ -248,7 +248,7 @@ export default function Home() {
         {/* Tech Stack */}
         <section className="flex w-full max-w-4xl flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <h2 className="font-serif text-4xl">Tech Stack</h2>
+            <h2 className="font-serif text-3xl">Tech Stack</h2>
             <p className="text-muted-foreground">
               Modern, type-safe technologies for full-stack apps.
             </p>
@@ -268,7 +268,7 @@ export default function Home() {
         {/* LLM-Optimized */}
         <section className="flex w-full max-w-4xl flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <h2 className="font-serif text-4xl">LLM-Optimized</h2>
+            <h2 className="font-serif text-3xl">LLM-Optimized</h2>
             <p className="text-muted-foreground">
               Built so AI agents can understand and contribute to the project effectively.
             </p>
@@ -288,7 +288,7 @@ export default function Home() {
         {/* Tooling */}
         <section className="flex w-full max-w-4xl flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <h2 className="font-serif text-4xl">Tooling</h2>
+            <h2 className="font-serif text-3xl">Tooling</h2>
             <p className="text-muted-foreground">
               Fast, strict tooling for a reliable development workflow. Hover the dependencies to
               learn more.
