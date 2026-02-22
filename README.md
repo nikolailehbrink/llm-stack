@@ -15,7 +15,8 @@ A full-stack React starter template, optimized for AI-assisted development. Conf
 | Framework   | [React Router 7](https://reactrouter.com/) (framework mode, SSR)                                                                                 |
 | UI          | [React 19](https://react.dev/), [Tailwind CSS v4](https://tailwindcss.com/), [Base UI](https://base-ui.com/) via [shadcn](https://ui.shadcn.com/) |
 | Auth        | [Better Auth](https://www.better-auth.com/) (email/password, sessions, middleware)                                                                |
-| Database    | [Drizzle ORM](https://orm.drizzle.team/) + SQLite ([better-sqlite3](https://github.com/WiseLibs/better-sqlite3))                                 |
+| Database    | [Drizzle ORM](https://orm.drizzle.team/) + [Turso](https://turso.tech/) (libSQL) / SQLite                                                        |
+| Hosting     | [Vercel](https://vercel.com/) (serverless, via `@vercel/react-router`)                                                                            |
 | Validation  | [Zod](https://zod.dev/)                                                                                                                          |
 | Formatter   | [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) (with Tailwind class sorting, import sorting, package.json sorting)                      |
 | Linter      | [oxlint](https://oxc.rs/docs/guide/usage/linter.html) (with jsx-a11y, React, unicorn, and import plugins)                                        |
@@ -119,7 +120,7 @@ llm-stack/
 │   │   ├── ui/              # Base UI components (avatar, button, card, dropdown-menu, input, label, tooltip)
 │   │   └── color-scheme-toggle.tsx
 │   ├── db/
-│   │   ├── index.server.ts  # Database connection (WAL mode)
+│   │   ├── index.server.ts  # Database connection (Turso/libSQL)
 │   │   ├── schema.ts        # Drizzle schema
 │   │   └── seed.ts          # Database seeding script
 │   ├── lib/
@@ -141,6 +142,8 @@ llm-stack/
 │   ├── root.tsx             # Root layout
 │   ├── context.ts           # Session context
 │   └── app.css              # Tailwind v4 theme and styles
+├── server/
+│   └── app.ts              # Custom server entry for Vercel (RouterContextProvider)
 ├── CLAUDE.md                # References AGENTS.md for Claude Code
 ├── AGENTS.md                # Project context, rules, and conventions for AI agents
 └── .mcp.json                # MCP server configuration
@@ -204,6 +207,35 @@ Hooks are stored in `.githooks/` and activated automatically via the `prepare` s
 5. `requireGuest` middleware redirects authenticated users away from `/auth`
 
 Auth mutations use `clientAction` exports (browser-side) because Better Auth's client manages session cookies directly.
+
+## Deployment (Vercel)
+
+This branch (`deploy/vercel`) is configured for [Vercel](https://vercel.com/) with [Turso](https://turso.tech/) as the production database. The `main` branch uses `better-sqlite3` and is platform-agnostic.
+
+### What's different from `main`
+
+- `better-sqlite3` replaced with `@libsql/client` (Turso/libSQL)
+- Drizzle dialect changed from `sqlite` to `turso`
+- `@vercel/react-router` preset added for serverless deployment
+- Custom server entry (`server/app.ts`) for middleware compatibility — workaround for [vercel/vercel#13327](https://github.com/vercel/vercel/issues/13327), remove once fixed
+- `trustedOrigins` set via `VERCEL_URL` for preview deployments
+- `BETTER_AUTH_URL` removed — Better Auth auto-detects from requests
+
+### Vercel environment variables
+
+Set via the [Vercel Turso integration](https://vercel.com/integrations/turso):
+
+| Variable             | Environments         |
+| -------------------- | -------------------- |
+| `BETTER_AUTH_SECRET` | Production, Preview  |
+| `TURSO_DATABASE_URL` | Production, Preview  |
+| `TURSO_AUTH_TOKEN`   | Production, Preview  |
+
+### Push schema to Turso
+
+```sh
+TURSO_DATABASE_URL=... TURSO_AUTH_TOKEN=... bun run db:push
+```
 
 ## License
 

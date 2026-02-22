@@ -75,7 +75,18 @@ Rules:
 
 ### Database
 
-Drizzle ORM with `better-sqlite3`. Schema in `app/db/schema.ts` (user, session, account, verification tables). Connection in `app/db/index.server.ts` with WAL mode enabled. `DATABASE_URL` env var points to the SQLite file.
+Drizzle ORM with `@libsql/client` (libSQL/Turso). Schema in `app/db/schema.ts` (user, session, account, verification tables). Connection in `app/db/index.server.ts`. In production, `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` (set via Vercel Turso integration) connect to Turso. Locally, falls back to `file:{DATABASE_URL}` for a SQLite file.
+
+### Deployment
+
+This branch (`deploy/vercel`) is configured for Vercel deployment. Key differences from `main`:
+
+- **Database driver:** `@libsql/client` instead of `better-sqlite3`
+- **Drizzle dialect:** `turso` instead of `sqlite`
+- **Vercel preset:** `@vercel/react-router` with `vercelPreset()` in `react-router.config.ts`
+- **Custom server entry:** `server/app.ts` provides `RouterContextProvider` (required for middleware on Vercel)
+- **Vite config:** SSR build uses `server/app.ts` as rollup input
+- **Auth:** `trustedOrigins` includes `VERCEL_URL` for preview deployments; `baseURL` is auto-detected from requests
 
 ### Server-only code
 
@@ -114,8 +125,12 @@ Do not generate Prettier or ESLint configs. Follow existing formatting style. Av
 Required in `.env`:
 
 - `BETTER_AUTH_SECRET` — Auth secret key
-- `BETTER_AUTH_URL` — Auth base URL (http://localhost:5173 in dev)
-- `DATABASE_URL` — SQLite file path
+- `DATABASE_URL` — SQLite file path (local dev)
+
+Set via Vercel Turso integration (production/preview):
+
+- `TURSO_DATABASE_URL` — Turso database URL
+- `TURSO_AUTH_TOKEN` — Turso auth token
 
 ## Code Rules
 
