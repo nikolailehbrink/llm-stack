@@ -8,9 +8,8 @@ import {
   useRouteLoaderData,
 } from "react-router";
 
-import type { Route } from "./+types/root";
-
 import "./app.css";
+import type { Route } from "./+types/root";
 import { getColorScheme } from "./lib/color-scheme.server";
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -29,8 +28,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="text-pretty">
-        {children}
+      <body className="relative text-pretty">
+        <div className="isolate">{children}</div>
         <ScrollRestoration />
         <Scripts />
       </body>

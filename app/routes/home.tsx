@@ -354,7 +354,7 @@ function DependencyLine({ entry, isLast }: { entry: PackageEntry; isLast: boolea
 
 export default function Home() {
   return (
-    <TooltipProvider>
+    <TooltipProvider closeDelay={200}>
       <div className="container mx-auto flex min-h-screen flex-col items-center gap-8 px-4 py-8">
         <header className="flex w-full max-w-4xl justify-end">
           <ColorSchemeToggle />
@@ -368,7 +368,18 @@ export default function Home() {
             Configured so LLM agents can understand, modify, and extend the codebase.
           </p>
           <div className="mt-2 flex gap-4">
-            <Button nativeButton={false} render={<Link to="/auth">Get Started</Link>} />
+            <Button
+              nativeButton={false}
+              render={
+                <Link
+                  to="https://github.com/nikolailehbrink/llm-stack"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Get Started
+                </Link>
+              }
+            />
             <Button
               variant="outline"
               nativeButton={false}
