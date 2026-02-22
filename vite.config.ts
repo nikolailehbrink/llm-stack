@@ -4,10 +4,17 @@ import { defineConfig } from "vite";
 import devtoolsJson from "vite-plugin-devtools-json";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
+  build: {
+    rollupOptions: isSsrBuild
+      ? {
+          input: "./server/app.ts",
+        }
+      : undefined,
+  },
   server: {
     host: true,
     open: true,
   },
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths(), devtoolsJson()],
-});
+}));

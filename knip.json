@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "entry": ["app/lib/auth-client.ts"],
+  "entry": ["app/lib/auth-client.ts", "server/app.ts"],
   "oxlint": {
     "config": ["oxlint.config.ts"]
   },
