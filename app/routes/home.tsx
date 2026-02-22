@@ -18,26 +18,125 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+const iconProps = {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  className: "size-4 shrink-0",
+};
+
 const additionalFeatures = [
   {
     label: "Dark mode without FOUC",
     detail: "Inline script sets the color-scheme before first paint using a cookie",
+    icon: (
+      <svg {...iconProps}>
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </svg>
+    ),
   },
   {
     label: "One-command setup",
     detail: "Install, generate env, push schema, seed DB, start dev server",
+    icon: (
+      <svg {...iconProps}>
+        <polyline points="4 17 10 11 4 5" />
+        <line x1="12" x2="20" y1="19" y2="19" />
+      </svg>
+    ),
   },
-  { label: "Unused code detection", detail: "Knip flags dead files, exports, and dependencies" },
-  { label: "Clean script", detail: "Removes node_modules, .react-router, and build" },
-  { label: "Database seeding", detail: "Creates a demo user during setup" },
-  { label: "Auto-sorting", detail: "oxfmt sorts imports and package.json fields on every format" },
-  { label: "Exact version pinning", detail: "No caret or tilde ranges via .npmrc" },
-  { label: "Conventional commits", detail: "commitlint enforces feat/fix/chore format" },
+  {
+    label: "Unused code detection",
+    detail: "Knip flags dead files, exports, and dependencies",
+    icon: (
+      <svg {...iconProps}>
+        <path d="m3 6 3 1 7.89 3.26a2 2 0 0 1 1.11 1.11L18 17l1 3" />
+        <path d="M6 3 3 6" />
+        <path d="M21 18l-3 3" />
+        <path d="m2 2 20 20" />
+      </svg>
+    ),
+  },
+  {
+    label: "Clean script",
+    detail: "Removes node_modules, .react-router, and build",
+    icon: (
+      <svg {...iconProps}>
+        <path d="M3 6h18" />
+        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+      </svg>
+    ),
+  },
+  {
+    label: "Database seeding",
+    detail: "Creates a demo user during setup",
+    icon: (
+      <svg {...iconProps}>
+        <path d="M12 2a10 10 0 1 0 10 10H12V2Z" />
+        <path d="M21.18 8.02c-1-2.3-2.85-4.17-5.16-5.18" />
+      </svg>
+    ),
+  },
+  {
+    label: "Auto-sorting",
+    detail: "oxfmt sorts imports and package.json fields on every format",
+    icon: (
+      <svg {...iconProps}>
+        <path d="m3 16 4 4 4-4" />
+        <path d="M7 20V4" />
+        <path d="m21 8-4-4-4 4" />
+        <path d="M17 4v16" />
+      </svg>
+    ),
+  },
+  {
+    label: "Exact version pinning",
+    detail: "No caret or tilde ranges via .npmrc",
+    icon: (
+      <svg {...iconProps}>
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+      </svg>
+    ),
+  },
+  {
+    label: "Conventional commits",
+    detail: "commitlint enforces feat/fix/chore format",
+    icon: (
+      <svg {...iconProps}>
+        <circle cx="12" cy="12" r="10" />
+        <path d="m9 12 2 2 4-4" />
+      </svg>
+    ),
+  },
   {
     label: "Git hooks",
     detail: "Pre-commit runs format, lint, and Knip. Pre-push runs typecheck and tests",
+    icon: (
+      <svg {...iconProps}>
+        <path d="m18 16 4-4-4-4" />
+        <path d="m6 8-4 4 4 4" />
+        <path d="m14.5 4-5 16" />
+      </svg>
+    ),
   },
-  { label: "jsx-a11y linting", detail: "Accessibility rules with React Router component mappings" },
+  {
+    label: "jsx-a11y linting",
+    detail: "Accessibility rules with React Router component mappings",
+    icon: (
+      <svg {...iconProps}>
+        <circle cx="16" cy="4" r="1" />
+        <path d="m18 19 1-7-6 1" />
+        <path d="m5 8 3-3 5.5 3-2.36 3.5" />
+        <path d="M4.24 14.5a5 5 0 0 0 6.88 6" />
+        <path d="M13.76 17.5a5 5 0 0 0-6.88-6" />
+      </svg>
+    ),
+  },
 ];
 
 const llmFeatureGroups = [
@@ -363,11 +462,14 @@ export default function Home() {
               Pre-configured defaults so you don't have to set them up yourself.
             </p>
           </div>
-          <div className="grid gap-px overflow-hidden rounded-xl bg-muted ring-1 ring-foreground/10 sm:grid-cols-2">
+          <div className="grid gap-px overflow-hidden rounded-xl bg-foreground/10 ring-1 ring-foreground/10 sm:grid-cols-2">
             {additionalFeatures.map((item) => (
-              <div key={item.label} className="flex flex-col gap-1 bg-card px-4 py-3">
-                <span className="text-sm font-medium">{item.label}</span>
-                <span className="text-xs text-muted-foreground">{item.detail}</span>
+              <div key={item.label} className="flex gap-3 bg-card px-4 py-3">
+                <span className="mt-0.5 text-muted-foreground">{item.icon}</span>
+                <div className="flex flex-col gap-1">
+                  <span className="text-sm font-medium">{item.label}</span>
+                  <span className="text-xs text-muted-foreground">{item.detail}</span>
+                </div>
               </div>
             ))}
           </div>
