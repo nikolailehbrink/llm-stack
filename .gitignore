@@ -20,3 +20,5 @@
 
 # Claude Code
 .claude/
+.vercel
+.env*.local
