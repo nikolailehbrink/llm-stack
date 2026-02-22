@@ -2,32 +2,39 @@
 
 A full-stack React starter template, optimized for AI-assisted development. Configured so LLM agents can understand, modify, and extend the codebase.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="public/screenshot-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="public/screenshot-light.png">
+  <img alt="LLM Stack home page" src="public/screenshot-light.png">
+</picture>
+
 ## Tech Stack
 
 | Category    | Technology                                                                                                                                        |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Framework   | [React Router 7](https://reactrouter.com/) (framework mode, SSR)                                                                                  |
+| Framework   | [React Router 7](https://reactrouter.com/) (framework mode, SSR)                                                                                 |
 | UI          | [React 19](https://react.dev/), [Tailwind CSS v4](https://tailwindcss.com/), [Base UI](https://base-ui.com/) via [shadcn](https://ui.shadcn.com/) |
 | Auth        | [Better Auth](https://www.better-auth.com/) (email/password, sessions, middleware)                                                                |
-| Database    | [Drizzle ORM](https://orm.drizzle.team/) + SQLite ([better-sqlite3](https://github.com/WiseLibs/better-sqlite3))                                  |
-| Validation  | [Zod](https://zod.dev/)                                                                                                                           |
-| Formatter   | [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) (with Tailwind class sorting)                                                             |
-| Linter      | [oxlint](https://oxc.rs/docs/guide/usage/linter.html)                                                                                             |
+| Database    | [Drizzle ORM](https://orm.drizzle.team/) + SQLite ([better-sqlite3](https://github.com/WiseLibs/better-sqlite3))                                 |
+| Validation  | [Zod](https://zod.dev/)                                                                                                                          |
+| Formatter   | [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) (with Tailwind class sorting, import sorting, package.json sorting)                      |
+| Linter      | [oxlint](https://oxc.rs/docs/guide/usage/linter.html) (with jsx-a11y, React, unicorn, and import plugins)                                        |
 | Testing     | [Vitest](https://vitest.dev/)                                                                                                                     |
-| Unused code | [Knip](https://knip.dev/)                                                                                                                         |
-| Commits     | [Conventional Commits](https://www.conventionalcommits.org/) via [commitlint](https://commitlint.js.org/)                                         |
-| Runtime     | [Bun](https://bun.sh/) (also works with Node.js and Deno)                                                                                         |
-| Bundler     | [Vite 7](https://vite.dev/)                                                                                                                       |
-| Language    | [TypeScript](https://www.typescriptlang.org/) (strict mode)                                                                                       |
+| Unused code | [Knip](https://knip.dev/)                                                                                                                        |
+| Commits     | [Conventional Commits](https://www.conventionalcommits.org/) via [commitlint](https://commitlint.js.org/)                                        |
+| Bundler     | [Vite 7](https://vite.dev/)                                                                                                                      |
+| Language    | [TypeScript](https://www.typescriptlang.org/) (strict mode)                                                                                      |
 
 ## Features
 
 - **Server-side rendering** with React Router 7 framework mode
 - **Authentication** with email/password sign up, sign in, and session management
 - **Protected routes** via middleware (`requireAuth` / `requireGuest`)
-- **Color scheme toggle** with light, dark, and system modes (cookie-persisted)
+- **Dark mode without FOUC** — inline script sets color-scheme before first paint using a cookie
 - **Type-safe database** with Drizzle ORM, auto-generated route types, and Zod validation
+- **One-command setup** — install, generate env, push schema, seed DB, start dev server
 - **Auto-formatting on commit** via git hooks (oxfmt on staged files)
+- **Exact version pinning** — no caret or tilde ranges via `.npmrc`
 - **11 custom AI agent skills** for React Router, Better Auth, security, design patterns, and more
 - **4 MCP servers** for component installation, auth docs, library docs, and browser automation
 
@@ -35,14 +42,14 @@ A full-stack React starter template, optimized for AI-assisted development. Conf
 
 ### Prerequisites
 
-- [Bun](https://bun.sh/) (v1.3.9 or later)
+- [Bun](https://bun.sh/), [Node.js](https://nodejs.org/), [pnpm](https://pnpm.io/), or [Deno](https://deno.com/)
 
 ### Setup
 
 ```sh
 git clone https://github.com/nikolailehbrink/llm-stack.git
 cd llm-stack
-bun run setup
+bun run setup  # or: npm run setup / pnpm setup / deno task setup
 ```
 
 This will install dependencies, create a `.env` file with a generated secret, push the database schema, and seed a demo user (`demo@llmstack.dev` / `password123`).
@@ -50,24 +57,14 @@ This will install dependencies, create a `.env` file with a generated secret, pu
 ### Development
 
 ```sh
-bun run dev
+bun run dev  # or: npm run dev / pnpm dev / deno task dev
 ```
 
 Opens at [http://localhost:5173](http://localhost:5173).
 
 ### Using a Different Package Manager
 
-The project defaults to Bun, but the app code is runtime-agnostic and works with npm, pnpm, or Deno. Replace `bun` commands accordingly:
-
-| Bun                | npm                | pnpm                | Deno                 |
-| ------------------ | ------------------ | -------------------- | -------------------- |
-| `bun install`      | `npm install`      | `pnpm install`       | `deno install`       |
-| `bun run dev`      | `npm run dev`      | `pnpm dev`           | `deno task dev`      |
-| `bun run build`    | `npm run build`    | `pnpm build`         | `deno task build`    |
-| `bun run setup`    | `npm run setup`    | `pnpm setup`         | `deno task setup`    |
-| `bun run <script>` | `npm run <script>` | `pnpm <script>`      | `deno task <script>` |
-
-When using a different package manager, update the `setup` script in `package.json`:
+The project defaults to Bun, but the app code is runtime-agnostic. When using a different package manager, update the `setup` script in `package.json`:
 
 ```jsonc
 // npm:
@@ -80,29 +77,32 @@ When using a different package manager, update the `setup` script in `package.js
 "setup": "deno install && deno run -A scripts/setup.ts && deno task dev"
 ```
 
-You may also want to remove the `packageManager` field from `package.json` or update it to match your chosen package manager.
+You may also want to remove or update the `packageManager` field in `package.json`.
 
 ## Scripts
 
-| Script        | Command               | Description                      |
-| ------------- | --------------------- | -------------------------------- |
-| `setup`       | `bun run setup`       | First-time project setup         |
-| `dev`         | `bun run dev`         | Start dev server with HMR        |
-| `build`       | `bun run build`       | Production build                 |
-| `start`       | `bun run start`       | Production server                |
-| `preview`     | `bun run preview`     | Preview build with Vite          |
-| `typecheck`   | `bun run typecheck`   | Generate route types and run tsc |
-| `lint`        | `bun run lint`        | Run oxlint                       |
-| `lint:fix`    | `bun run lint:fix`    | Run oxlint with auto-fix         |
-| `fmt`         | `bun run fmt`         | Format with oxfmt                |
-| `fmt:check`   | `bun run fmt:check`   | Check formatting                 |
-| `test`        | `bun run test`        | Run tests with Vitest            |
-| `knip`        | `bun run knip`        | Check for unused code            |
-| `db:push`     | `bun run db:push`     | Push schema to database          |
-| `db:generate` | `bun run db:generate` | Generate migration files         |
-| `db:migrate`  | `bun run db:migrate`  | Run migrations                   |
-| `db:seed`     | `bun run db:seed`     | Seed database with demo user     |
-| `db:studio`   | `bun run db:studio`   | Open Drizzle Studio              |
+All scripts are defined in `package.json` and work with any package manager.
+
+| Script        | Description                      |
+| ------------- | -------------------------------- |
+| `setup`       | First-time project setup         |
+| `dev`         | Start dev server with HMR        |
+| `build`       | Production build                 |
+| `start`       | Production server                |
+| `preview`     | Preview build with Vite          |
+| `typecheck`   | Generate route types and run tsc |
+| `lint`        | Run oxlint                       |
+| `lint:fix`    | Run oxlint with auto-fix         |
+| `fmt`         | Format with oxfmt                |
+| `fmt:check`   | Check formatting                 |
+| `test`        | Run tests with Vitest            |
+| `knip`        | Check for unused code            |
+| `db:push`     | Push schema to database          |
+| `db:generate` | Generate migration files         |
+| `db:migrate`  | Run migrations                   |
+| `db:seed`     | Seed database with demo user     |
+| `db:studio`   | Open Drizzle Studio              |
+| `clean`       | Remove node_modules, .react-router, and build |
 
 ## Project Structure
 
@@ -113,11 +113,12 @@ llm-stack/
 ├── .vscode/                 # VS Code workspace settings and extensions
 ├── app/
 │   ├── components/
-│   │   ├── ui/              # Base UI components (button, card, input, label, tooltip)
+│   │   ├── ui/              # Base UI components (avatar, button, card, dropdown-menu, input, label, tooltip)
 │   │   └── color-scheme-toggle.tsx
 │   ├── db/
 │   │   ├── index.server.ts  # Database connection (WAL mode)
-│   │   └── schema.ts        # Drizzle schema
+│   │   ├── schema.ts        # Drizzle schema
+│   │   └── seed.ts          # Database seeding script
 │   ├── lib/
 │   │   ├── auth.server.ts   # Better Auth instance
 │   │   ├── auth-client.ts   # Client-side auth (signIn, signUp, signOut, useSession)
@@ -137,8 +138,8 @@ llm-stack/
 │   ├── root.tsx             # Root layout
 │   ├── context.ts           # Session context
 │   └── app.css              # Tailwind v4 theme and styles
-├── CLAUDE.md                # Project context for Claude Code
-├── AGENTS.md                # Mandatory rules for AI agents
+├── CLAUDE.md                # References AGENTS.md for Claude Code
+├── AGENTS.md                # Project context, rules, and conventions for AI agents
 └── .mcp.json                # MCP server configuration
 ```
 
@@ -150,40 +151,40 @@ This project is designed to work with [Claude Code](https://docs.anthropic.com/e
 
 ### CLAUDE.md & AGENTS.md
 
-`CLAUDE.md` provides project context — architecture, commands, conventions. `AGENTS.md` defines mandatory rules for AI agents: use Base UI via shadcn, follow React Router 7 framework mode, use Better Auth patterns, write Vitest tests, format with oxfmt, lint with oxlint.
+`CLAUDE.md` references `AGENTS.md`, which serves as the single source of truth for AI agents. It covers commands, architecture, auth flow, database, UI components, tooling, and all code rules with skill references in every relevant section.
 
 ### Custom Skills (11)
 
 Located in `.agents/skills/`, these provide specialized knowledge:
 
-| Skill                                      | Purpose                                   |
-| ------------------------------------------ | ----------------------------------------- |
+| Skill                                      | Purpose                                  |
+| ------------------------------------------ | ---------------------------------------- |
 | `react-router-framework-mode`              | Routes, loaders, actions, middleware, SSR |
-| `better-auth-best-practices`               | Auth flow patterns and integration        |
-| `better-auth-security-best-practices`      | Rate limiting, CSRF, session security     |
-| `email-and-password-best-practices`        | Secure email/password auth                |
-| `two-factor-authentication-best-practices` | 2FA implementation                        |
-| `create-auth-skill`                        | Auth layer scaffolding                    |
-| `organization-best-practices`              | Multi-tenant orgs and RBAC                |
-| `frontend-design`                          | Production-grade UI design                |
-| `web-design-guidelines`                    | Accessibility and UX auditing             |
-| `vercel-react-best-practices`              | React/Next.js performance optimization    |
-| `vercel-composition-patterns`              | Component composition and architecture    |
+| `better-auth-best-practices`               | Auth flow patterns and integration       |
+| `better-auth-security-best-practices`      | Rate limiting, CSRF, session security    |
+| `email-and-password-best-practices`        | Secure email/password auth               |
+| `two-factor-authentication-best-practices` | 2FA implementation                       |
+| `create-auth-skill`                        | Auth layer scaffolding                   |
+| `organization-best-practices`              | Multi-tenant orgs and RBAC               |
+| `frontend-design`                          | Production-grade UI design               |
+| `web-design-guidelines`                    | Accessibility and UX auditing            |
+| `vercel-react-best-practices`              | React performance optimization           |
+| `vercel-composition-patterns`              | Component composition and architecture   |
 
 ### MCP Servers (4)
 
 Configured in `.mcp.json`:
 
-| Server              | Type                                    | Purpose                                            |
-| ------------------- | --------------------------------------- | -------------------------------------------------- |
-| **shadcn**          | CLI (`bunx shadcn@latest mcp`)          | Install and manage Base UI components              |
-| **better-auth**     | HTTP                                    | Query Better Auth documentation                    |
-| **context7**        | HTTP                                    | Fetch up-to-date docs for any library              |
-| **chrome-devtools** | CLI (`bunx chrome-devtools-mcp@latest`) | Browser automation, performance tracing, debugging |
+| Server              | Type | Purpose                                            |
+| ------------------- | ---- | -------------------------------------------------- |
+| **shadcn**          | CLI  | Install and manage Base UI components              |
+| **better-auth**     | HTTP | Query Better Auth documentation                    |
+| **context7**        | HTTP | Fetch up-to-date docs for any library              |
+| **chrome-devtools** | CLI  | Browser automation, performance tracing, debugging |
 
 ## Git Hooks
 
-Hooks are stored in `.githooks/` and activated automatically on `bun install` via the `prepare` script.
+Hooks are stored in `.githooks/` and activated automatically via the `prepare` script.
 
 | Hook           | What it does                                               |
 | -------------- | ---------------------------------------------------------- |
