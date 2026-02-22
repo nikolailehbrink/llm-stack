@@ -1,190 +1,172 @@
-# Project AI Agent Guidelines
+# AGENTS.md
 
-## Purpose
+Project context, rules, and conventions for AI agents contributing to this repository.
 
-This document defines mandatory rules and conventions for AI agents contributing to this repository.
-Agents must follow these rules strictly when generating, modifying, or reviewing code.
+## Commands
 
----
+All scripts are defined in `package.json` and work with any package manager.
 
-# Core UI Rules
+| Task                  | Script              | Notes                          |
+| --------------------- | ------------------- | ------------------------------ |
+| Setup (first time)    | `setup`             |                                |
+| Dev server            | `dev`               | Opens at http://localhost:5173 |
+| Build                 | `build`             |                                |
+| Start prod server     | `start`             |                                |
+| Preview build         | `preview`           |                                |
+| Typecheck             | `typecheck`         |                                |
+| Lint                  | `lint`              |                                |
+| Lint (autofix)        | `lint:fix`          |                                |
+| Format                | `fmt`               |                                |
+| Format check          | `fmt:check`         |                                |
+| Run tests             | `test`              |                                |
+| Run single test       | `vitest run <path>` | Via package runner (npx/bunx)  |
+| Unused code check     | `knip`              |                                |
+| DB push schema        | `db:push`           |                                |
+| DB generate migration | `db:generate`       |                                |
+| DB run migrations     | `db:migrate`        |                                |
+| DB seed               | `db:seed`           |                                |
+| DB studio             | `db:studio`         |                                |
 
-## 1. Component Library (MANDATORY)
+## Architecture
 
-- Always use **base-ui components via shadcn registry**
-- Components are available through the MCP server
-- Do NOT create custom primitive UI components if a base-ui component exists
-- Do NOT reimplement components that exist in base-ui
+Full-stack React app using **React Router 7 framework mode** with SSR, **Better Auth** for authentication, **Drizzle ORM** with SQLite, and **Tailwind CSS v4**.
 
-### Toast Rule (Important)
+### Path alias
 
-- ❌ Do NOT use the default shadcn `toast` component (it is based on `sonner`)
-- ❌ Do NOT install `sonner`
-- ✅ If toast functionality is required, use the **base-ui toast implementation**
-- ✅ If toast is not installed, install the base-ui version — never the sonner-based one
+`~/*` maps to `./app/*` (configured in tsconfig.json).
 
-If uncertain, prefer base-ui over third-party toast solutions.
+### Routing
 
----
+Use the `react-router-framework-mode` skill when generating routes, loaders, actions, middleware, protected routes, or nested layouts.
 
-## 2. Design Consistency
+Routes are defined programmatically in `app/routes.ts` using helpers from `@react-router/dev/routes` (`index`, `route`, `layout`, `prefix`). Typed route parameters and loader data are auto-generated in `.react-router/types/`.
 
-When generating UI, the agent must:
+Middleware is enabled via `v8_middleware: true` in `react-router.config.ts`.
 
-- Use existing button variants before creating new ones
-- Reuse existing color tokens (no arbitrary hex values)
-- Follow existing spacing scale
-- Use existing typography styles
-- Prefer composition over customization
-- Avoid inline styles unless absolutely necessary
-- Avoid hardcoded colors
-- Respect dark mode support
+- Follow React Router 7 framework mode patterns strictly
+- Do not generate legacy React Router v1-v6 patterns or deprecated APIs
+- Do not invent router APIs
 
-If unsure about styling:
+### Authentication
 
-- Inspect existing components
-- Mirror patterns already used in the codebase
+Use the `better-auth-best-practices` skill when implementing auth flows. Additional skills for specific features:
 
----
+- `email-and-password-best-practices` — Email/password sign-up and sign-in
+- `two-factor-authentication-best-practices` — 2FA setup and verification
+- `organization-best-practices` — Multi-tenant organizations and RBAC
+- `better-auth-security-best-practices` — Rate limiting, CSRF, session security, trusted origins
+- `create-auth-skill` — Scaffolding new auth layers
 
-# Routing
+Auth flow:
 
-## React Router
-
-We use:
-
-- React Router 7
-- Framework mode
-- Middleware support enabled
-
-Because this may be beyond your training cutoff:
-
-- Use the provided `react-router-framework-mode` skill when generating:
-  - routes
-  - loaders
-  - actions
-  - middleware
-  - protected routes
-  - nested layouts
-
-Do NOT:
-
-- Generate legacy React Router v5 patterns
-- Use deprecated APIs
-- Invent router APIs
-
-Follow framework-mode patterns strictly.
-
----
-
-# Authentication
-
-We use:
-
-- better-auth
+- **Server:** `app/lib/auth.server.ts` — Better Auth instance with Drizzle adapter and email/password enabled.
+- **Client:** `app/lib/auth-client.ts` — Exports `signIn`, `signUp`, `signOut`, `useSession`.
+- **API:** `app/routes/api/auth/catch-all.ts` — Catches all `/api/auth/*` requests and delegates to `auth.handler()`.
+- **Middleware:** `app/lib/auth-middleware.server.ts` — `requireAuth` (redirects unauthenticated to `/auth`, sets session on context) and `requireGuest` (redirects authenticated to `/dashboard`).
+- **Context:** Session is passed via React Router context (`app/context.ts` using `createContext<Session>()`). Middleware sets it, loaders/components read it.
+- Auth mutations (`signIn`, `signUp`, `signOut`) use `clientAction` exports (browser-side), not server actions, because Better Auth client manages session cookies directly.
 
 Rules:
 
-- Do not invent custom auth logic
-- Do not implement JWT handling manually
-- Use better-auth client/server utilities
+- Do not invent custom auth logic or implement JWT handling manually
+- Use Better Auth client/server utilities
 - Respect middleware-based auth protection patterns
 - Keep auth logic out of UI components
 
----
+### Database
 
-# Testing
+Drizzle ORM with `better-sqlite3`. Schema in `app/db/schema.ts` (user, session, account, verification tables). Connection in `app/db/index.server.ts` with WAL mode enabled. `DATABASE_URL` env var points to the SQLite file.
 
-We use:
+### Server-only code
 
-- vitest
+Files suffixed `.server.ts` are excluded from client bundles (auth, db, middleware). Do not mix server and client code.
 
-Rules:
+### UI Components
 
-- Write tests using vitest syntax
-- Do NOT use jest
-- Prefer unit tests for utilities
-- Prefer integration-style tests for routes
-- Avoid testing implementation details
-- Mock external services appropriately
+Use the shadcn MCP server to search, preview, and install base-ui components. Uses **shadcn** with **base-ui** primitives (not Radix).
 
----
+- Always use base-ui components via shadcn before creating custom primitives
+- Do NOT use sonner-based toast — use the base-ui toast implementation instead
+- Use existing button variants, color tokens, spacing scale, and typography styles before creating new ones
+- Respect dark mode support
+- Avoid inline styles and hardcoded colors
+- When unsure about styling, inspect existing components and mirror codebase patterns
 
-# Linting & Formatting
+### UI Design
 
-We use:
+Use the `frontend-design` skill when building pages, components, or layouts. Use the `web-design-guidelines` skill when reviewing UI for accessibility and design compliance.
 
-- oxfmt (NOT prettier)
-- oxlint (NOT eslint)
+- Prefer composition over customization
+- Keep components small and composable
 
-Rules:
+### Tooling
 
-- Do not generate prettier configs
-- Do not reference eslint
-- Follow existing formatting style
-- Avoid unnecessary formatting changes
+- **Formatter:** oxfmt (not Prettier) — configured in `.oxfmtrc.json` with Tailwind class sorting
+- **Linter:** oxlint (not ESLint) — configured in `oxlint.config.ts`
+- **Tests:** vitest (not Jest)
+- **Commits:** Conventional commits enforced via commitlint
+- **Git hooks** (`.githooks/`): pre-commit auto-formats + lint + knip; pre-push runs typecheck + tests; commit-msg runs commitlint
 
----
+Do not generate Prettier or ESLint configs. Follow existing formatting style. Avoid unnecessary formatting changes.
 
-# Code Style Guidelines
+### Environment variables
 
-## General
+Required in `.env`:
 
-- Use TypeScript strictly
-- Avoid `any`
-- Prefer explicit return types on exported functions
+- `BETTER_AUTH_SECRET` — Auth secret key
+- `BETTER_AUTH_URL` — Auth base URL (http://localhost:5173 in dev)
+- `DATABASE_URL` — SQLite file path
+
+## Code Rules
+
+### React Patterns
+
+Use the `vercel-react-best-practices` skill when writing or refactoring React components. Use the `vercel-composition-patterns` skill for component architecture decisions (compound components, render props, scalable APIs).
+
 - Use functional components only
 - Use hooks correctly (no conditional hooks)
 - Avoid deeply nested components
-- Keep components small and composable
+- Avoid unnecessary re-renders
+- Use lazy loading for heavy routes
+- Prefer suspense where appropriate
+- Keep bundle size minimal
 
-## State Management
+### TypeScript
+
+- Use TypeScript strictly — avoid `any`
+- Prefer explicit return types on exported functions
+
+### State Management
 
 - Prefer local state
 - Avoid global state unless necessary
 - Do not introduce new state libraries without explicit instruction
 
----
+### Testing
 
-# Dependency Rules
+- Write tests using vitest syntax — do not use Jest
+- Prefer unit tests for utilities
+- Prefer integration-style tests for routes
+- Avoid testing implementation details
+- Mock external services appropriately
+
+### Dependencies
 
 Before adding a new dependency:
 
 1. Check if base-ui already provides the solution
-2. Check if React Router or better-auth already solves it
-3. Avoid adding utility libraries unnecessarily
-4. Prefer platform APIs when possible
+2. Check if React Router or Better Auth already solves it
+3. Prefer platform APIs when possible
+4. Do not add UI, styling, toast, or form libraries unless explicitly required
 
-Do NOT:
-
-- Add UI libraries
-- Add styling libraries
-- Add toast libraries
-- Add form libraries unless explicitly required
-
----
-
-# File & Folder Conventions
+### Files & Structure
 
 - Follow existing project structure
 - Do not invent new top-level folders
-- Place route files according to React Router framework mode
+- Place route files according to React Router framework mode conventions
 - Keep UI components separated from business logic
-- Do not mix server and client code improperly
 
----
-
-# Performance & DX
-
-- Avoid unnecessary re-renders
-- Use lazy loading for heavy routes
-- Prefer suspense where appropriate
-- Keep bundle size minimal
-- Avoid over-abstraction
-
----
-
-# Error Handling
+### Error Handling
 
 - Use route error boundaries
 - Use middleware for cross-cutting concerns
@@ -192,9 +174,7 @@ Do NOT:
 - Provide meaningful error messages
 - Do not expose sensitive information
 
----
-
-# Accessibility
+### Accessibility
 
 - Use semantic HTML
 - Use accessible base-ui components
@@ -202,11 +182,10 @@ Do NOT:
 - Ensure inputs are labeled
 - Avoid div-based click handlers
 
----
+### Security
 
-# Security
+Use the `better-auth-security-best-practices` skill for security-related implementation.
 
-- Never expose secrets
-- Never log sensitive tokens
+- Never expose secrets or log sensitive tokens
 - Sanitize user input where required
-- Follow better-auth best practices
+- Follow Better Auth best practices

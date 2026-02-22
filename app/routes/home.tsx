@@ -25,7 +25,7 @@ const llmFeatureGroups = [
       {
         title: "CLAUDE.md & AGENTS.md",
         description:
-          "Project context and mandatory rules that agents read automatically. Covers commands, architecture, auth flow, DB, component library, and code style.",
+          "Project context and agent rules that are read automatically. Covers commands, architecture, auth flow, DB, component library, and code conventions.",
       },
     ],
   },
@@ -274,15 +274,7 @@ export default function Home() {
             </p>
           </div>
           <div className="relative w-full">
-            {/* Left gradient line */}
-            <div className="absolute top-[15%] bottom-[10%] left-0 z-10 w-px bg-linear-to-b from-transparent via-foreground/20 to-transparent" />
-            {/* Right gradient line */}
-            <div className="absolute top-[10%] right-0 bottom-[20%] z-10 w-px bg-linear-to-b from-transparent via-foreground/25 to-transparent" />
-            {/* Top gradient line */}
-            <div className="absolute top-0 right-[20%] left-[10%] z-10 h-px bg-linear-to-r from-transparent via-foreground/20 to-transparent" />
-            {/* Bottom gradient line */}
-            <div className="absolute right-[10%] bottom-0 left-[25%] z-10 h-px bg-linear-to-r from-transparent via-foreground/15 to-transparent" />
-            <div className="overflow-hidden rounded-xl border border-border bg-card">
+            <div className="overflow-hidden rounded-xl border bg-card">
               <pre className="flex justify-center p-6 font-mono text-xs leading-relaxed wrap-break-word whitespace-pre-wrap sm:p-8 sm:text-sm">
                 <code className="text-foreground/50">
                   <span>{"{"}</span>
