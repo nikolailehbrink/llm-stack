@@ -199,7 +199,8 @@ export default function AuthPage() {
                         type="email"
                         required
                         autoComplete="email"
-                        placeholder="max.mustermann@web.de"
+                        // TODO: Remove defaultValue before production use
+                        defaultValue="demo@llmstack.dev"
                       />
                     </div>
 
@@ -212,7 +213,8 @@ export default function AuthPage() {
                         required
                         minLength={8}
                         autoComplete={isSignUp ? "new-password" : "current-password"}
-                        placeholder="Min. 8 characters"
+                        // TODO: Remove defaultValue before production use
+                        defaultValue="password123"
                       />
                     </div>
 
