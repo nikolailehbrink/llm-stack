@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { ColorSchemeToggle } from "~/components/color-scheme-toggle";
 import { Button } from "~/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 
 import type { Route } from "./+types/home";
@@ -141,17 +142,27 @@ const additionalFeatures = [
 
 const llmFeatureGroups = [
   {
-    heading: "Project",
+    heading: "MCP Servers",
     items: [
       {
-        title: "CLAUDE.md & AGENTS.md",
+        title: "shadcn MCP",
         description:
-          "Project context and agent rules that are read automatically. Covers commands, architecture, auth flow, DB, component library, and code conventions.",
+          "Agents search, preview, and install base-ui components from the registry without leaving the editor.",
       },
       {
-        title: "Fast Tooling",
+        title: "Context7 MCP",
         description:
-          "oxfmt, oxlint, and Knip are Rust-based and run in milliseconds — agents get instant feedback on every change.",
+          "Fetches up-to-date documentation and code examples for any library — no stale training data.",
+      },
+      {
+        title: "Better Auth MCP",
+        description:
+          "Searches auth docs and asks an AI support agent about Better Auth features and troubleshooting.",
+      },
+      {
+        title: "Chrome DevTools MCP",
+        description:
+          "Inspects the page, optimizes LCP, catches console errors, and runs performance traces.",
       },
     ],
   },
@@ -186,27 +197,17 @@ const llmFeatureGroups = [
     ],
   },
   {
-    heading: "MCP Servers",
+    heading: "Project",
     items: [
       {
-        title: "shadcn MCP",
+        title: "CLAUDE.md & AGENTS.md",
         description:
-          "Agents search, preview, and install base-ui components from the registry without leaving the editor.",
+          "Project context and agent rules that are read automatically. Covers commands, architecture, auth flow, DB, component library, and code conventions.",
       },
       {
-        title: "Context7 MCP",
+        title: "Fast Tooling",
         description:
-          "Fetches up-to-date documentation and code examples for any library — no stale training data.",
-      },
-      {
-        title: "Better Auth MCP",
-        description:
-          "Searches auth docs and asks an AI support agent about Better Auth features and troubleshooting.",
-      },
-      {
-        title: "Chrome DevTools MCP",
-        description:
-          "Inspects the page, optimizes LCP, catches console errors, and runs performance traces.",
+          "oxfmt, oxlint, and Knip are Rust-based and run in milliseconds — agents get instant feedback on every change.",
       },
     ],
   },
@@ -428,30 +429,36 @@ export default function Home() {
         </section>
 
         {/* LLM-Optimized */}
-        <section className="flex w-full max-w-4xl flex-col gap-6">
+        <section className="flex w-full max-w-4xl flex-col gap-4">
           <div className="flex flex-col gap-2">
             <h2 className="font-serif text-3xl">LLM-Optimized</h2>
             <p className="text-muted-foreground">
               Built so AI agents can understand and contribute to the project effectively.
             </p>
           </div>
-          {llmFeatureGroups.map((group) => (
-            <div key={group.heading} className="flex flex-col gap-3">
-              <h3 className="text-sm font-medium tracking-wide text-muted-foreground uppercase">
-                {group.heading}
-              </h3>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {group.items.map((item) => (
-                  <Card key={item.title}>
-                    <CardHeader>
-                      <CardTitle>{item.title}</CardTitle>
-                      <CardDescription>{item.description}</CardDescription>
-                    </CardHeader>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          ))}
+          <Tabs defaultValue={llmFeatureGroups[0].heading}>
+            <TabsList>
+              {llmFeatureGroups.map((group) => (
+                <TabsTrigger key={group.heading} value={group.heading}>
+                  {group.heading}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+            {llmFeatureGroups.map((group) => (
+              <TabsContent key={group.heading} value={group.heading}>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {group.items.map((item) => (
+                    <Card key={item.title}>
+                      <CardHeader>
+                        <CardTitle>{item.title}</CardTitle>
+                        <CardDescription>{item.description}</CardDescription>
+                      </CardHeader>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+            ))}
+          </Tabs>
         </section>
 
         {/* Additional Features */}
