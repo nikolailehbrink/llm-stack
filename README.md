@@ -55,7 +55,7 @@ cd llm-stack
 bun run setup  # or: npm run setup / pnpm setup / deno task setup
 ```
 
-This will install dependencies, create a `.env` file with a generated secret, push the database schema, and seed a demo user (`demo@llmstack.dev` / `password123`).
+This will install dependencies, create a `.env` file with a generated secret, push the database schema, and seed a demo user (`demo@example.com` / `password123`).
 
 ### Development
 

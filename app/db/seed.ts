@@ -2,7 +2,7 @@ import { auth } from "~/lib/auth.server";
 
 const DEMO_USER = {
   name: "Demo User",
-  email: "demo@llmstack.dev",
+  email: "demo@example.com",
   password: "password123",
 };
 

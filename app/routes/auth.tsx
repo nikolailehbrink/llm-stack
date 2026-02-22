@@ -200,7 +200,7 @@ export default function AuthPage() {
                         required
                         autoComplete="email"
                         // TODO: Remove defaultValue before production use
-                        defaultValue="demo@llmstack.dev"
+                        defaultValue="demo@example.com"
                       />
                     </div>
 
