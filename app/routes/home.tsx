@@ -18,14 +18,41 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+const additionalFeatures = [
+  {
+    label: "Dark mode without FOUC",
+    detail: "Inline script sets the color-scheme before first paint using a cookie",
+  },
+  {
+    label: "One-command setup",
+    detail: "Install, generate env, push schema, seed DB, start dev server",
+  },
+  { label: "Unused code detection", detail: "Knip flags dead files, exports, and dependencies" },
+  { label: "Clean script", detail: "Removes node_modules, .react-router, and build" },
+  { label: "Database seeding", detail: "Creates a demo user during setup" },
+  { label: "Auto-sorting", detail: "oxfmt sorts imports and package.json fields on every format" },
+  { label: "Exact version pinning", detail: "No caret or tilde ranges via .npmrc" },
+  { label: "Conventional commits", detail: "commitlint enforces feat/fix/chore format" },
+  {
+    label: "Git hooks",
+    detail: "Pre-commit runs format, lint, and Knip. Pre-push runs typecheck and tests",
+  },
+  { label: "jsx-a11y linting", detail: "Accessibility rules with React Router component mappings" },
+];
+
 const llmFeatureGroups = [
   {
-    heading: "Project Context",
+    heading: "Project",
     items: [
       {
         title: "CLAUDE.md & AGENTS.md",
         description:
           "Project context and agent rules that are read automatically. Covers commands, architecture, auth flow, DB, component library, and code conventions.",
+      },
+      {
+        title: "Fast Tooling",
+        description:
+          "oxfmt, oxlint, and Knip are Rust-based and run in milliseconds — agents get instant feedback on every change.",
       },
     ],
   },
@@ -81,21 +108,6 @@ const llmFeatureGroups = [
         title: "Chrome DevTools MCP",
         description:
           "Inspects the page, optimizes LCP, catches console errors, and runs performance traces.",
-      },
-    ],
-  },
-  {
-    heading: "Tooling & DX",
-    items: [
-      {
-        title: "Conventional Commits",
-        description:
-          "Structured commit messages enforced by commitlint — agents follow the convention automatically.",
-      },
-      {
-        title: "Fast Tooling",
-        description:
-          "oxfmt, oxlint, and Knip are Rust-based and run in milliseconds — agents get instant feedback on every change.",
       },
     ],
   },
@@ -274,7 +286,7 @@ export default function Home() {
             </p>
           </div>
           <div className="relative w-full">
-            <div className="overflow-hidden rounded-xl border bg-card">
+            <Card>
               <pre className="flex justify-center p-6 font-mono text-xs leading-relaxed wrap-break-word whitespace-pre-wrap sm:p-8 sm:text-sm">
                 <code className="text-foreground/50">
                   <span>{"{"}</span>
@@ -312,7 +324,7 @@ export default function Home() {
                   <span>{"}"}</span>
                 </code>
               </pre>
-            </div>
+            </Card>
           </div>
         </section>
 
@@ -341,6 +353,24 @@ export default function Home() {
               </div>
             </div>
           ))}
+        </section>
+
+        {/* Additional Features */}
+        <section className="flex w-full max-w-4xl flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <h2 className="font-serif text-3xl">Additional Features</h2>
+            <p className="text-muted-foreground">
+              Pre-configured defaults so you don't have to set them up yourself.
+            </p>
+          </div>
+          <div className="grid gap-px overflow-hidden rounded-xl bg-muted ring-1 ring-foreground/10 sm:grid-cols-2">
+            {additionalFeatures.map((item) => (
+              <div key={item.label} className="flex flex-col gap-1 bg-card px-4 py-3">
+                <span className="text-sm font-medium">{item.label}</span>
+                <span className="text-xs text-muted-foreground">{item.detail}</span>
+              </div>
+            ))}
+          </div>
         </section>
       </div>
     </TooltipProvider>
