@@ -38,6 +38,9 @@ A full-stack React starter template, optimized for AI-assisted development. Conf
 - **11 custom AI agent skills** for React Router, Better Auth, security, design patterns, and more
 - **4 MCP servers** for component installation, auth docs, library docs, and browser automation
 
+> [!TIP]
+> **Deploying to Vercel?** Use the [`deploy/vercel`](https://github.com/nikolailehbrink/llm-stack/tree/deploy/vercel) branch — it swaps `better-sqlite3` for [Turso](https://turso.tech/) (libSQL), adds the `@vercel/react-router` preset, and is ready for serverless deployment. See the [live demo](https://llm-stack.nikolailehbr.ink).
+
 ## Getting Started
 
 ### Prerequisites
