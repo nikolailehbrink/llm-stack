@@ -94,10 +94,10 @@ export function ColorSchemeToggle() {
 
   // Reset optimistic state when fetcher completes
   React.useEffect(() => {
-    if (fetcher.state === "idle" && optimisticColorScheme !== null) {
+    if (fetcher.state === "idle") {
       setOptimisticColorScheme(null);
     }
-  }, [fetcher.state, optimisticColorScheme]);
+  }, [fetcher.state]);
 
   const currentOption = options.find((o) => o.value === displayedColorScheme) ?? options[2];
 
