@@ -1,4 +1,4 @@
-import { Link, useFetcher } from "react-router";
+import { Link, redirect, useFetcher } from "react-router";
 
 import { ColorSchemeToggle } from "~/components/color-scheme-toggle";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
@@ -22,7 +22,7 @@ export async function loader({ context }: Route.LoaderArgs) {
 
 export async function clientAction() {
   await signOut();
-  return { success: true };
+  throw redirect("/auth");
 }
 
 function getGreeting(): string {
