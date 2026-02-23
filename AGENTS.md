@@ -102,7 +102,7 @@ Use the `frontend-design` skill when building pages, components, or layouts. Use
 ### Tooling
 
 - **Formatter:** oxfmt (not Prettier) — configured in `.oxfmtrc.json` with Tailwind class sorting
-- **Linter:** oxlint (not ESLint) — configured in `oxlint.config.ts`
+- **Linter:** oxlint (not ESLint) — configured in `.oxlintrc.json`
 - **Tests:** vitest (not Jest)
 - **Commits:** Conventional commits enforced via commitlint
 - **Git hooks** (`.githooks/`): pre-commit auto-formats + lint + knip; pre-push runs typecheck + tests; commit-msg runs commitlint
