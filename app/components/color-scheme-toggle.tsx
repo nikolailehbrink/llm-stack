@@ -84,7 +84,22 @@ export function ColorSchemeToggle() {
   const current = loaderData?.colorScheme ?? "system";
   const fetcher = useFetcher();
 
-  const currentOption = options.find((o) => o.value === current) ?? options[2];
+  // Optimistic UI: Track the selected color scheme immediately
+  const [optimisticColorScheme, setOptimisticColorScheme] = React.useState<ColorScheme | null>(
+    null,
+  );
+
+  // Use optimistic value if set, otherwise use loader data
+  const displayedColorScheme = optimisticColorScheme ?? current;
+
+  // Reset optimistic state when fetcher completes
+  React.useEffect(() => {
+    if (fetcher.state === "idle" && optimisticColorScheme !== null) {
+      setOptimisticColorScheme(null);
+    }
+  }, [fetcher.state, optimisticColorScheme]);
+
+  const currentOption = options.find((o) => o.value === displayedColorScheme) ?? options[2];
 
   const [open, setOpen] = React.useState(false);
 
@@ -97,8 +112,10 @@ export function ColorSchemeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuRadioGroup
-          value={current}
+          value={displayedColorScheme}
           onValueChange={(value) => {
+            // Optimistically update the UI immediately
+            setOptimisticColorScheme(value as ColorScheme);
             fetcher.submit(
               { colorScheme: value as ColorScheme },
               { method: "POST", action: "/api/color-scheme" },

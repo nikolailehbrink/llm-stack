@@ -383,7 +383,11 @@ export default function Home() {
             <Button
               variant="outline"
               nativeButton={false}
-              render={<Link to="/dashboard">Dashboard</Link>}
+              render={
+                <Link to="/dashboard" prefetch="intent">
+                  Dashboard
+                </Link>
+              }
             />
           </div>
         </section>

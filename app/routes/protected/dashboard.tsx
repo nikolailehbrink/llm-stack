@@ -4,6 +4,7 @@ import { ColorSchemeToggle } from "~/components/color-scheme-toggle";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Spinner } from "~/components/ui/spinner";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 import { sessionContext } from "~/context";
 import { signOut } from "~/lib/auth-client";
@@ -126,7 +127,7 @@ export default function Dashboard({ loaderData }: Route.ComponentProps) {
         {/* Sticky Header */}
         <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
           <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-3">
-            <Link to="/" className="font-serif text-lg">
+            <Link to="/" prefetch="intent" className="font-serif text-lg">
               LLM Stack
             </Link>
             <div className="flex items-center gap-2">
@@ -143,20 +144,24 @@ export default function Dashboard({ loaderData }: Route.ComponentProps) {
                         disabled={isSigningOut}
                         aria-label="Sign out"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="size-4"
-                        >
-                          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                          <polyline points="16 17 21 12 16 7" />
-                          <line x1="21" x2="9" y1="12" y2="12" />
-                        </svg>
+                        {isSigningOut ? (
+                          <Spinner />
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="size-4"
+                          >
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                            <polyline points="16 17 21 12 16 7" />
+                            <line x1="21" x2="9" y1="12" y2="12" />
+                          </svg>
+                        )}
                       </Button>
                     </fetcher.Form>
                   }
@@ -210,7 +215,7 @@ export default function Dashboard({ loaderData }: Route.ComponentProps) {
                 }
 
                 return (
-                  <Link key={action.label} to={action.to}>
+                  <Link key={action.label} to={action.to} prefetch="intent">
                     {inner}
                   </Link>
                 );

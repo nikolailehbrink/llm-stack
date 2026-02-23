@@ -6,6 +6,7 @@ import { Button } from "~/components/ui/button";
 import { Card, CardContent } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { Spinner } from "~/components/ui/spinner";
 import { signIn, signUp } from "~/lib/auth-client";
 import { requireGuest } from "~/lib/auth-middleware.server";
 
@@ -223,7 +224,16 @@ export default function AuthPage() {
                     )}
 
                     <Button type="submit" disabled={isSubmitting} className="w-full">
-                      {isSubmitting ? "Loading..." : isSignUp ? "Create account" : "Sign in"}
+                      {isSubmitting ? (
+                        <span className="flex items-center gap-2">
+                          <Spinner />
+                          Loading...
+                        </span>
+                      ) : isSignUp ? (
+                        "Create account"
+                      ) : (
+                        "Sign in"
+                      )}
                     </Button>
                   </fetcher.Form>
 
