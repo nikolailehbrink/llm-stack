@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useFetcher, useRouteLoaderData } from "react-router";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -9,8 +8,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import type { ColorScheme } from "~/lib/color-scheme.server";
-import type { loader } from "~/root";
+import { type ColorScheme, useOptimisticColorScheme } from "~/lib/color-scheme";
 
 const options: { value: ColorScheme; label: string; icon: React.ReactNode }[] = [
   {
@@ -80,11 +78,8 @@ const options: { value: ColorScheme; label: string; icon: React.ReactNode }[] = 
 ];
 
 export function ColorSchemeToggle() {
-  const loaderData = useRouteLoaderData<typeof loader>("root");
-  const current = loaderData?.colorScheme ?? "system";
-  const fetcher = useFetcher();
-
-  const currentOption = options.find((o) => o.value === current) ?? options[2];
+  const [colorScheme, setColorScheme] = useOptimisticColorScheme();
+  const currentOption = options.find((o) => o.value === colorScheme) ?? options[2];
 
   const [open, setOpen] = React.useState(false);
 
@@ -97,12 +92,9 @@ export function ColorSchemeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuRadioGroup
-          value={current}
+          value={colorScheme}
           onValueChange={(value) => {
-            fetcher.submit(
-              { colorScheme: value as ColorScheme },
-              { method: "POST", action: "/api/color-scheme" },
-            );
+            setColorScheme(value as ColorScheme);
             setOpen(false);
           }}
         >

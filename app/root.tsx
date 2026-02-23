@@ -5,22 +5,24 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useRouteLoaderData,
 } from "react-router";
 
 import "./app.css";
 import type { Route } from "./+types/root";
+import { useColorScheme } from "./lib/color-scheme";
 import { getColorScheme } from "./lib/color-scheme.server";
 
+// Color scheme is read by useColorScheme() via useRouteLoaderData("root")
 export async function loader({ request }: Route.LoaderArgs) {
   const colorScheme = await getColorScheme(request);
   return { colorScheme };
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const loaderData = useRouteLoaderData<typeof loader>("root");
+  const colorScheme = useColorScheme();
+
   return (
-    <html lang="en" className={loaderData?.colorScheme ?? "system"}>
+    <html lang="en" className={colorScheme}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
