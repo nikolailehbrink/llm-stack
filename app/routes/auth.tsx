@@ -6,6 +6,7 @@ import { Button } from "~/components/ui/button";
 import { Card, CardContent } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { Spinner } from "~/components/ui/spinner";
 import { signIn, signUp } from "~/lib/auth-client";
 import { requireGuest } from "~/lib/auth-middleware.server";
 
@@ -178,53 +179,56 @@ export default function AuthPage() {
                   <fetcher.Form method="post" className="flex flex-col gap-4">
                     <input type="hidden" name="intent" value={isSignUp ? "sign-up" : "sign-in"} />
 
-                    {isSignUp && (
+                    <fieldset disabled={isSubmitting} className="flex flex-col gap-4">
+                      {isSignUp && (
+                        <div className="flex flex-col gap-2">
+                          <Label htmlFor="name">Name</Label>
+                          <Input
+                            id="name"
+                            name="name"
+                            type="text"
+                            required={isSignUp}
+                            placeholder="Max Mustermann"
+                          />
+                        </div>
+                      )}
+
                       <div className="flex flex-col gap-2">
-                        <Label htmlFor="name">Name</Label>
+                        <Label htmlFor="email">Email</Label>
                         <Input
-                          id="name"
-                          name="name"
-                          type="text"
-                          required={isSignUp}
-                          placeholder="Max Mustermann"
+                          id="email"
+                          name="email"
+                          type="email"
+                          required
+                          autoComplete="email"
+                          // TODO: Remove defaultValue before production use
+                          defaultValue="demo@example.com"
                         />
                       </div>
-                    )}
 
-                    <div className="flex flex-col gap-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        required
-                        autoComplete="email"
-                        // TODO: Remove defaultValue before production use
-                        defaultValue="demo@example.com"
-                      />
-                    </div>
+                      <div className="flex flex-col gap-2">
+                        <Label htmlFor="password">Password</Label>
+                        <Input
+                          id="password"
+                          name="password"
+                          type="password"
+                          required
+                          minLength={8}
+                          autoComplete={isSignUp ? "new-password" : "current-password"}
+                          // TODO: Remove defaultValue before production use
+                          defaultValue="password123"
+                        />
+                      </div>
 
-                    <div className="flex flex-col gap-2">
-                      <Label htmlFor="password">Password</Label>
-                      <Input
-                        id="password"
-                        name="password"
-                        type="password"
-                        required
-                        minLength={8}
-                        autoComplete={isSignUp ? "new-password" : "current-password"}
-                        // TODO: Remove defaultValue before production use
-                        defaultValue="password123"
-                      />
-                    </div>
+                      {fetcher.data?.error && (
+                        <p className="text-sm text-destructive">{fetcher.data.error}</p>
+                      )}
 
-                    {fetcher.data?.error && (
-                      <p className="text-sm text-destructive">{fetcher.data.error}</p>
-                    )}
-
-                    <Button type="submit" disabled={isSubmitting} className="w-full">
-                      {isSubmitting ? "Loading..." : isSignUp ? "Create account" : "Sign in"}
-                    </Button>
+                      <Button type="submit" disabled={isSubmitting} className="w-full">
+                        {isSubmitting && <Spinner />}
+                        {isSignUp ? "Create account" : "Sign in"}
+                      </Button>
+                    </fieldset>
                   </fetcher.Form>
 
                   <p className="text-sm text-muted-foreground">
