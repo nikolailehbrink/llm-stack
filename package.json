@@ -40,7 +40,7 @@
     "preview": "vite preview",
     "setup": "bun install && bun scripts/setup.ts && bun run dev",
     "start": "react-router-serve build/server/index.js",
-    "test": "vitest --passWithNoTests",
+    "test": "vitest",
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
