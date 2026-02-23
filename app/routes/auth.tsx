@@ -147,7 +147,7 @@ export default function AuthPage() {
   return (
     <div className="container mx-auto flex min-h-screen flex-col items-center gap-8 px-4 py-8">
       <header className="flex w-full max-w-4xl items-center justify-between">
-        <Link to="/" className="font-serif text-lg">
+        <Link to="/" prefetch="intent" className="font-serif text-lg">
           LLM Stack
         </Link>
         <ColorSchemeToggle />

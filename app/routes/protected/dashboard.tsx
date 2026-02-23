@@ -127,7 +127,7 @@ export default function Dashboard({ loaderData }: Route.ComponentProps) {
         {/* Sticky Header */}
         <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
           <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-3">
-            <Link to="/" className="font-serif text-lg">
+            <Link to="/" prefetch="intent" className="font-serif text-lg">
               LLM Stack
             </Link>
             <div className="flex items-center gap-2">
@@ -215,7 +215,7 @@ export default function Dashboard({ loaderData }: Route.ComponentProps) {
                 }
 
                 return (
-                  <Link key={action.label} to={action.to}>
+                  <Link key={action.label} to={action.to} prefetch="intent">
                     {inner}
                   </Link>
                 );
